@@ -22,6 +22,11 @@ Have a database with authorized user.
 
 Go to `https://<domain>/installer.php` and follow the instructions. **Do not activate modules**, just install them.
 
+Use this snippet to select all modules for installation:
+```js
+[...document.querySelectorAll('input[type=radio][value=install]')].forEach(e => e.click())
+```
+
 Login with admin account and check that all modules are there (**not** activated)
 
 ## Modules
