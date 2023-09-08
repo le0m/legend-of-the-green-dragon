@@ -130,12 +130,16 @@ function db_affected_rows($link=false){
 	return $r;
 }
 
-function db_pconnect($host,$user,$pass){
+function db_pconnect($host,$user,$pass,$port = null){
   global $mysqli_resource;
+
+    if ($port === null && !empty($DB_PORT)) {
+        $port = $DB_PORT;
+    }
 
 	// Constants cannot be an object
 	// MySQLi do not know a pconnect
-	$mysqli_resource = New MySQLi($host, $user, $pass);
+	$mysqli_resource = New MySQLi($host, $user, $pass, null, $port);
 
 	if($mysqli_resource) {
 	  return true;
@@ -145,11 +149,15 @@ function db_pconnect($host,$user,$pass){
 	}
 }
 
-function db_connect($host,$user,$pass){
+function db_connect($host,$user,$pass,$port = null){
 	global $mysqli_resource;
 
+    if ($port === null && !empty($DB_PORT)) {
+        $port = $DB_PORT;
+    }
+
 	// Constants cannot be an object
-	$mysqli_resource = New MySQLi($host, $user, $pass);
+	$mysqli_resource = New MySQLi($host, $user, $pass, null, $port);
 
 	if($mysqli_resource) {
 	  return true;

@@ -15,7 +15,11 @@ if (file_exists("dbconnect.php")){
 
 	output("`nWhat is the address of your database server?`n");
 	rawoutput("<input name='DB_HOST' value=\"".htmlentities($session['dbinfo']['DB_HOST'], ENT_COMPAT, getsetting("charset", "ISO-8859-1"))."\">");
-	tip("If you are running LoGD from the same server as your database, use 'localhost' here.  Otherwise, you will have to find out what the address is of your database server.  Your server's ISP might be able to provide this information.");
+	tip("If you are running LoGD from the same server as your database, use 'localhost' here.  Otherwise, you will have to find out the address of your database server.  Your server's ISP might be able to provide this information.");
+
+	output("`nWhat is the port of your database server?`n");
+	rawoutput("<input name='DB_PORT' value=\"".htmlentities($session['dbinfo']['DB_PORT'] ?? '3306', ENT_COMPAT, getsetting("charset", "ISO-8859-1"))."\">");
+	tip("If you are using the default MySQL port, leave the default.  Otherwise, you will have to find out the port of your database server.  Your server's ISP might be able to provide this information.");
 
 	output("`nWhat is the username you use to connect to the database server?`n");
 	rawoutput("<input name='DB_USER' value=\"".htmlentities($session['dbinfo']['DB_USER'], ENT_COMPAT, getsetting("charset", "ISO-8859-1"))."\">");
@@ -37,7 +41,7 @@ if (file_exists("dbconnect.php")){
 	tip("Do you want to use a datacache for the sql queries? Many internal queries produce the same results and can be cached. This feature is *highly* recommended to use as the MySQL server is usually high frequented. When using in an environment where Safe Mode is enabled; this needs to be a path that has the same UID as the web server runs.");
 
 	output("`nIf yes, what is the path to the datacache directory?`n");
-	
+
 	if (isset($session['dbinfo']['DB_DATACACHEPATH'])) {
 		rawoutput("<input name='DB_DATACACHEPATH' value=\"".htmlentities($session['dbinfo']['DB_DATACACHEPATH'], ENT_COMPAT, getsetting("charset", "ISO-8859-1"))."\">");
 	} else {

@@ -2,6 +2,7 @@
 require_once("lib/dbwrapper.php");
 if (httppostisset("DB_HOST")) {
 	$session['dbinfo']['DB_HOST']=httppost("DB_HOST");
+	$session['dbinfo']['DB_PORT']=httppost("DB_PORT");
 	$session['dbinfo']['DB_USER']=httppost("DB_USER");
 	$session['dbinfo']['DB_PASS']=httppost("DB_PASS");
 	$session['dbinfo']['DB_NAME']=httppost("DB_NAME");
@@ -11,7 +12,7 @@ if (httppostisset("DB_HOST")) {
 output("`@`c`bTesting the Database Connection`b`c`2");
 output("Trying to establish a connection with the database:`n");
 ob_start();
-$link = db_connect($session['dbinfo']['DB_HOST'], $session['dbinfo']['DB_USER'], $session['dbinfo']['DB_PASS']);
+$link = db_connect($session['dbinfo']['DB_HOST'], $session['dbinfo']['DB_USER'], $session['dbinfo']['DB_PASS'], $session['dbinfo']['DB_PORT']);
 $error = ob_get_contents();
 ob_end_clean();
 if (!$link){

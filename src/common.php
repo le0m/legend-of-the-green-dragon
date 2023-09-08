@@ -160,15 +160,16 @@ if (file_exists("dbconnect.php")){
 // http://php.net/manual/en/features.persistent-connections.php
 //
 if (!defined("DB_NODB")) {
-	$link = db_connect($DB_HOST, $DB_USER, $DB_PASS);
+	$link = db_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_PORT);
 	define("VALIDDB_NAME",$DB_NAME);
 }
 else $link=false;
-//$link = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS);
+//$link = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_PORT);
 
 $out = ob_get_contents();
 ob_end_clean();
 unset($DB_HOST);
+unset($DB_PORT);
 unset($DB_USER);
 unset($DB_PASS);
 

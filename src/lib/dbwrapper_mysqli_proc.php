@@ -122,10 +122,14 @@ function db_affected_rows($link=false){
 	return $r;
 }
 
-function db_pconnect($host,$user,$pass){
+function db_pconnect($host,$user,$pass,$port = null){
   global $mysqli_resource;
 
-	$mysqli_resource = mysqli_connect($host, $user, $pass);
+    if ($port === null && !empty($DB_PORT)) {
+        $port = $DB_PORT;
+    }
+
+	$mysqli_resource = mysqli_connect($host, $user, $pass, null, $port);
 
 	if($mysqli_resource) {
 	  return true;
@@ -135,10 +139,14 @@ function db_pconnect($host,$user,$pass){
 	}
 }
 
-function db_connect($host,$user,$pass){
+function db_connect($host,$user,$pass,$port = null){
 	global $mysqli_resource;
 
-	$mysqli_resource = mysqli_connect($host, $user, $pass);
+    if ($port === null && !empty($DB_PORT)) {
+        $port = $DB_PORT;
+    }
+
+	$mysqli_resource = mysqli_connect($host, $user, $pass, null, $port);
 
 	if($mysqli_resource) {
 	  return true;

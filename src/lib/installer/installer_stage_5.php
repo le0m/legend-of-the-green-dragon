@@ -14,9 +14,9 @@ $conflict = array();
 
 if (file_exists("dbconnect.php")) {
 	require_once("dbconnect.php");
-	$link = db_connect($DB_HOST, $DB_USER, $DB_PASS);
+	$link = db_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_PORT);
 }
-//$link = mysql_connect($session['dbinfo']['DB_HOST'],$session['dbinfo']['DB_USER'],$session['dbinfo']['DB_PASS']);
+//$link = mysql_connect($session['dbinfo']['DB_HOST'],$session['dbinfo']['DB_USER'],$session['dbinfo']['DB_PASS'],$session['dbinfo']['DB_PORT']);
 //mysql_select_db($session['dbinfo']['DB_NAME']);
 $sql = "SHOW TABLES";
 $result = db_query($sql);
