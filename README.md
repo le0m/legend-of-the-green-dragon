@@ -24,6 +24,8 @@ Go to `https://<domain>/installer.php` and follow the instructions. **Do not act
 
 Login with admin account and check that all modules are there (**not** activated)
 
-## TODO
+## Modules
 
-The `todo` folder contains modules to try.
+Added `lovers` and `riddles` from [here](https://dragonprime-reborn.ca/viewtopic.php?f=10&t=5&sid=16305d1c52fb49764e832a7460f9b1f7).
+
+The `todo` folder contains a ton of modules to try.
