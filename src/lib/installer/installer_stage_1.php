@@ -24,7 +24,7 @@ if (md5($license)=="484d213db9a69e79321feafb85915ff1"){
 $license = join("",file("LICENSE.txt"));
 $license = preg_replace("/[^\na-zA-Z0-9!?.,;:'\"\/\\()@ -\]\[]/","",$license);
 $licensemd5s = array(
-'e281e13a86d4418a166d2ddfcd1e8032'=>true
+'0af3a2e3cb6bdbe0c93f9e501701294e'=>true
 );
 if (isset($licensemd5s[md5($license)])){
 	// Reload it so we get the right line breaks, etc.
@@ -37,7 +37,7 @@ if (isset($licensemd5s[md5($license)])){
 	rawoutput($license);
 }else{
 	output("`^The license file (LICENSE.txt) has been modified.  Please obtain a new copy of the game's code, this file has been tampered with.");
-	output("Expected MD5 in (".join(array_keys($licensemd5s),",")."), but got ".md5($license));
+	output("Expected MD5 in (".join(",", array_keys($licensemd5s))."), but got ".md5($license));
 	$stage=-1;
 	$session['stagecompleted']=-1;
 }

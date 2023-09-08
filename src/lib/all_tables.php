@@ -386,7 +386,7 @@ function get_all_tables(){
 				'name'=>'maxhitpointsperlevel', 'type'=>'int(6) unsigned', 'null'=>'0', 'default'=>'10'
 			),
 			'abilities'=>array(
-				'name'=>'abilities', 'type'=>'text', 'null'=>'0', 'default'=>''
+				'name'=>'abilities', 'type'=>'text', 'null'=>'0'
 			),
 			'cannotdie'=>array(
 				'name'=>'cannotdie', 'type'=>'tinyint(4)', 'null'=>'0', 'default'=>'0'
@@ -410,7 +410,7 @@ function get_all_tables(){
 				'name'=>'companioncostgold', 'type'=>'int(10)', 'default'=>'0'
 			),
 			'jointext'=>array(
-				'name'=>'jointext', 'type'=>'text', 'default'=>''
+				'name'=>'jointext', 'type'=>'text', 'null'=>'0'
 			),
 			'dyingtext'=>array(
 				'name'=>'dyingtext', 'type'=>'varchar(255)', 'default'=>''
