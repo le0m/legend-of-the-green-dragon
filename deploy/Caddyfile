@@ -1,0 +1,36 @@
+{
+	admin off
+	local_certs
+	skip_install_trust
+	default_sni localhost
+	auto_https disable_redirects
+}
+
+http:// {
+	root * /app
+
+    encode gzip
+    push
+
+    header -Server
+
+    file_server {
+        hide .*
+    }
+
+    log {
+        output stderr
+        format json
+        level INFO
+        format filter {
+            wrap json
+            fields {
+                request>headers>Authorization hash
+                request>headers>Cookie delete
+                resp_headers>Set-Cookie delete
+            }
+        }
+    }
+
+	php_fastcgi {$PHPFPM_HOST}
+}
