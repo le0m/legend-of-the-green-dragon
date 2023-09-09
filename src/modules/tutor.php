@@ -6,16 +6,16 @@
 function tutor_getmoduleinfo(){
 	$info = array(
 		"name"=>"In-game tutor",
-		"author"=>"Booger & Shannon Brown & JT Traub, minor modifications and translation by `8Or`4ia`\$n`4n`8a",
+		"author"=>"Booger & Shannon Brown & JT Traub",
 		"version"=>"1.0",
 		"category"=>"Administrative",
 		"download"=>"core_module",
 		"prefs"=>array(
-			"In-Game User Preferences,title",
+			"In-Game tutor User Preferences,title",
 			"user_ignore"=>"Turn off the tutor help?,bool|0",
 			"seenforest"=>"Has the player seen the forest instructions,bool|0",
-			),
-		);
+		),
+	);
 	return $info;
 }
 
@@ -48,114 +48,113 @@ function tutor_dohook($hookname,$args){
 	}
 
 	switch($hookname){
-	case "newday":
-		set_module_pref("seenforest", 0);
-		break;
-	case "village":
-		if ($age < 11){
-			tlschema($args['schemas']['gatenav']);
-			addnav($args["gatenav"]);
-			tlschema();
-			addnav("*?`\$Hilfe, ich habe mich verlaufen!", "runmodule.php?module=tutor&op=helpfiles");
-			unblocknav("runmodule.php?module=tutor&op=helpfiles");
-		};
-		break;
-	case "battle":
-		global $options;
-		$badguy = $args[0];
-		$tutormsg = "";
-		if ($badguy['creaturehealth'] > 0 && $badguy['creaturelevel'] > $session['user']['level'] && $options['type'] == 'forest'){
-			$tutormsg = translate_inline("`tDas `6En`^g`6el`^c`6hen`t sieht sehr besorgt aus. \"`^Achtung! Dieses Wesen scheint st�rker als du zu sein... willst du nicht lieber fliehen? Wenn es nicht auf Anhieb klappt, versuch es gleich noch einmal.\"`t Das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t kichert nur und meint: `\$\"Genau, sonst endest du nacher noch als D�nger f�r den Wald!\"`0");
-		}
-		if ($tutormsg) tutor_talk("%s", $tutormsg);
-	case "everyheader":
-		if (!$session['user']['loggedin']) break;
-		$adef = $session['user']['armordef'];
-		$wdam = $session['user']['weapondmg'];
-		$gold = $session['user']['gold'];
-		$goldinbank = $session['user']['goldinbank'];
-		$goldtotal = $gold+$goldinbank;
-		if(!isset($args['script']) || !$args['script']) break;
-		switch($args['script']){
 		case "newday":
-			if ($age > 1) break;
-			if ((!$session['user']['race'] ||
-						$session['user']['race']==RACE_UNKNOWN) &&
-					httpget("setrace")==""){
-				if (is_module_active("racetroll"))
-					$troll=translate_inline("Troll");
-				if (is_module_active("racedwarf"))
-					$dwarf=translate_inline("Dwarf");
-				if (is_module_active("racehuman"))
-					$human=translate_inline("Human");
-				if (is_module_active("raceelf"))
-					$elf=translate_inline("Elf");
-				if ($troll || $dwarf || $human || $elf) {
-					$tutormsg = translate_inline("`tEin kleines `6En`^g`6el`^c`6hen`t fliegt zu dir und schwirrt f�r einen Moment um deinen Kopf herum.`n`n\"`&Wa-wa-wa...`t\" stammelst du.`n`n `\$\"Heda, halt mal den Schnabel!\"`t krakeelt das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t, das mit einem leisen 'plopp' auf deiner Schulter erscheint. `$\"Du sollst uns zuh�ren, nicht reden!\"`t`n`n\"`^Also, wir sind hier, um dich mit diesem Reich vertraut zu machen, also tust du gut daran, uns ganz genau zuzuh�ren\",`t erkl�rt das `6En`^g`6el`^c`6hen`t von deiner anderen Schulter aus. `n`nDu nickst stumm und schenkst diesen seltsamen Wesen deine volle Aufmerksamkeit.`n`n\"`\$Nun,`t\" beginnt das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t, \"`\$Du bist ja noch ganz gr�n hinter den Ohren. Und hast keinen blassen Schimmer, wo du herkommst, ne? Wenn du noch nie hier gewesen bist, ist es wohl am Einfachsten, wenn du dir da was aussuchst!\" `tAufgeregt h�pft es auf und ab und wedelt mit einer Liste voller Vorschl�ge vor deiner Nase herum.`n`n Tadelnd den Kopf sch�ttelnd l�sst das `6En`^g`6el`^c`6hen`t dich noch wissen: `^\"Jede Rasse hat ihre ganz besonderen Vorteile und St�rken. Aber keine Sorge - wenn du nach einiger Zeit bemerkst, dass dir eine andere besser gefallen w�rde, kannst du nach jedem erlegten Drachen noch einmal w�hlen.\"");
-					tutor_talk("%s", $tutormsg);
-				};
-			}elseif ($session['user']['specialty']=="" && !httpget("setrace")){
-				if (is_module_active("specialtydarkarts"))
-					$da=translate_inline("Dark Arts");
-				if (is_module_active("specialtymysticpower"))
-					$mp=translate_inline("Mystical Powers");
-				if (is_module_active("specialtythiefskills"))
-					$ts=translate_inline("Thieving Skills");
-				if ($da || $mp || $ts){
-					$tutormsg = translate_inline("`tDas `6En`^g`6el`^c`6hen`t flattert vor dir her, ungeachtet deiner M�hen, es aus deinem Sichtfeld zu scheuchen. Einen Moment sp�ter erklingt auch seine durchdringende Stimme wieder:`n`n`^\"Oh, sieh nur, noch mehr wundervolle Entscheidungen! Vermutlich willst du jetzt eine kurze Berufsberatung?\"`t`n`n Das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t rempelt es aber sofort grob an und unterbricht den Vortrag, doch das `6En`^g`6el`^c`6hen`t l�sst sich nicht abhalten. `^\"Warum probierst du nicht erst einmal hiervon etwas? So stolperst du nicht �ber deine eigenen F��e.\"`t`n`nEs h�lt eine kleine Schriftrolle vor deine Augen, gepr�gt von kleiner Schrift, und wartet auf deine Entscheidung.`n`n Das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t kr�ht noch: `\$\"Das kannst du aber sp�ter auch nochmal �ndern, Boss!\"");
-					tutor_talk("%s", $tutormsg);
-				}
-			}
+			set_module_pref("seenforest", 0);
 			break;
 		case "village":
+			if ($age < 11){
+				tlschema($args['schemas']['gatenav']);
+				addnav($args["gatenav"]);
+				tlschema();
+				addnav("*?`\$Help Me, I'm Lost!", "runmodule.php?module=tutor&op=helpfiles");
+				unblocknav("runmodule.php?module=tutor&op=helpfiles");
+			};
+			break;
+		case "battle":
+			global $options;
+			$badguy = $args[0];
 			$tutormsg = "";
-			if ($wdam == 0 && $gold >= 48){
-				$tutormsg = translate_inline("`\$\"Ey, du solltest dir wirklich 'ne Waffe zulegen\", `tverk�ndet das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t, \"`\$dass du den ollen Waldmonstern mal so richtig eins auf die M�tze geben kannst! Hopp, zu Waffenladen, ich warte dann dort auf dich, Boss.\"");
-			}elseif($wdam == 0 && $goldtotal >= 48){
-				$tutormsg = translate_inline("`n\"`\$Los, gehen wir 'n bisschen Kohle von der Bank holen, beweg' deinen Hintern!\"`n`n");
-			}elseif ($adef == 0 && $gold >= 48){
-				$tutormsg = translate_inline("`tDas `6En`^g`6el`^c`6hen`t umschwirrt dich besorgt. `^\"Du brauchst unbedingt auch eine R�stung, nicht dass dir noch etwas passiert... das w�re wirklich schrecklich! Die gute Pegasus kann dir bestimmt weiterhelfen.\"");
-			}elseif ($adef == 0 && $goldtotal >= 48){
-				$tutormsg = translate_inline("\"`^Lass uns zuerst ein bisschen Gold von der Bank holen, ja?\"");
-			}elseif (!$session['user']['experience']){
-				$tutormsg = translate_inline("`tDas `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t dr�ngelt: `\$\"Boss, wann gehen wir denn endlich mal in den Wyrmforst?\"`t Auf deinen fragenden Blick erkl�rt das `6En`^g`6el`^c`6hen`t: `^\"Du kannst dort Erfahrung sammeln und Gold finden.\"");
-			}elseif ($session['user']['experience'] > 100 && $session['user']['level'] == 1 && !$session['user']['seenmaster']){
-				$tutormsg = translate_inline("`tDas `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t schreit f�rmlich in dein Ohr: \"`\$Krass, Aldda! Du bist ja voll der coole Checker!\"`t W�hrend du dir noch den Kopf dar�ber zerbrichst, was bitte ein 'kuhler Tscheka' sein soll, kl�rt das `6En`^g`6el`^c`6hen`t dich bereits auf. `^\"Du hast genug Erfahrung gesammelt, um deinen Meister herauszufordern. Du findest ihn im Trainingslager in deiner Heimatstadt.\"");
+			if ($badguy['creaturehealth'] > 0 && $badguy['creaturelevel'] > $session['user']['level'] && $options['type'] == 'forest'){
+				$tutormsg = translate_inline("`#Eibwen`0 looks agitated!  \"`\$Look out!`3 This creature looks like it is a higher level than you!  You might want to `^run away`3! You might not be successful, but keep trying and hope you get away before you're turned into forest fertilizer!`0\"`n");
 			}
 			if ($tutormsg) tutor_talk("%s", $tutormsg);
+		case "everyheader":
+            if (!$session['user']['loggedin']) break;
+			$adef = $session['user']['armordef'];
+			$wdam = $session['user']['weapondmg'];
+			$gold = $session['user']['gold'];
+			$goldinbank = $session['user']['goldinbank'];
+			$goldtotal = $gold+$goldinbank;
+			if(!isset($args['script']) || !$args['script']) break;
+			switch($args['script']){
+				case "newday":
+					if ($age > 1) break;
+					if ((!$session['user']['race'] ||
+							$session['user']['race']==RACE_UNKNOWN) &&
+						httpget("setrace")==""){
+						if (is_module_active("racetroll"))
+							$troll=translate_inline("Troll");
+						if (is_module_active("racedwarf"))
+							$dwarf=translate_inline("Dwarf");
+						if (is_module_active("racehuman"))
+							$human=translate_inline("Human");
+						if (is_module_active("raceelf"))
+							$elf=translate_inline("Elf");
+						if ($troll || $dwarf || $human || $elf) {
+							$tutormsg = translate_inline("`0A tiny `#aqua-colored imp`0 flies up and buzzes beside your head for a moment.`n`n\"`&Wha-wha-wha...`0\" you stammer.`n`n\"`#Oh, hush up you.  You're supposed to listen to me, not talk!`0\" the imp squeaks.`n`n\"`#Now, I'm here to help you get familiar with these realms, so you better listen close to what I've got to say.`0\"`n`nYou nod dumbly for a moment then give this being your attention.`n`n\"`#Now,`0\" it says,\" `#you're only young, and maybe you don't remember where you grew up. If you've never been in here before, choosing one of these is probably easiest!`0\" He jumps about excitedly, waiting for your decision, and waves a list of suggestions in front of you.`n");
+							tutor_talk("%s`c`b`#%s`n%s`n%s`n%s`n`b`c", $tutormsg, $troll, $elf, $human, $dwarf);
+						};
+					}elseif ($session['user']['specialty']=="" && !httpget("setrace")){
+						if (is_module_active("specialtydarkarts"))
+							$da=translate_inline("Dark Arts");
+						if (is_module_active("specialtymysticpower"))
+							$mp=translate_inline("Mystical Powers");
+						if (is_module_active("specialtythiefskills"))
+							$ts=translate_inline("Thieving Skills");
+						if ($da || $mp || $ts){
+							$tutormsg = translate_inline("`0The bug flutters about you, no matter how much you try to swat him from view. A moment later his piercing chatter returns.`n`n\"`#Oh, look, more decisions! I suppose you want some career counseling now?`0\"`n`nHe buzzes about, before imparting, \"`#Why not try one of these first, so you won't trip over your own shoelaces?`0\"`n`nHe holds a small scroll before you, embossed with small script, and awaits your decision.`n");
+							tutor_talk("%s`c`b`#%s`n%s`n%s`b`c", $tutormsg, $da, $mp, $ts);
+						}
+					}
+					break;
+				case "village":
+					$tutormsg = "";
+					if ($wdam == 0 && $gold >= 48){
+						$tutormsg = translate_inline("\"`3You really should get a weapon, to make you stronger. You can buy one at the `^weapon shop`3. I'll meet you there!`0\"`n");
+					}elseif($wdam == 0 && $goldtotal >= 48){
+						$tutormsg = translate_inline("\"`3We need to withdraw some gold from `^the bank`3 to buy a weapon, Come with me!`0\"`n");
+					}elseif ($adef == 0 && $gold >= 48){
+						$tutormsg = translate_inline("\"`3You won't be very safe without any armor! The `^armor shop`3 has a nice selection. Let's go!`0\"`n");
+					}elseif ($adef == 0 && $goldtotal >= 48){
+						$tutormsg = translate_inline("\"`3We need to withdraw some gold from `^the bank`3, so we can buy some armor!`0\"`n");
+					}elseif (!$session['user']['experience']){
+						$tutormsg = translate_inline("\"`3The `^forest`3 is worth visiting, too. That's where you gain experience and gold!`0\"`n");
+					}elseif ($session['user']['experience'] > 100 && $session['user']['level'] == 1 && !$session['user']['seenmaster']){
+						$tutormsg = translate_inline("\"`3Holy smokes!  You're advancing so fast!  You have enough experience to reach level 2.  You should find the `^warrior training`3, and challenge your master!  After you've done that, you'll find you're much more powerful.`0\"`n");
+					}
+					if ($tutormsg) tutor_talk("%s", $tutormsg);
+					break;
+				case "forest":
+					$tutormsg = "";
+					if ($goldtotal >= 48 && $wdam == 0){
+						$tutormsg = translate_inline("\"`3Hey, you have enough gold to buy a weapon. It might be a good idea to visit `^the town`3 now and go shopping!`0\"`n");
+					}elseif($goldtotal >= 48 && $adef == 0){
+						$tutormsg = translate_inline("\"`3Hey, you have enough gold to buy some armor. It might be a good idea to visit `^the town`3 now and go shopping!`0\"`n");
+					}elseif (!$session['user']['experience'] && !get_module_pref("seenforest")){
+						$tutormsg = translate_inline("`#Eibwen`& flies in loops around your head. \"`3Not much to say here.  Fight monsters, gain gold, heal when you need to.  Most of all, have fun!`0\"`n`nHe flies off back toward the village.`n`nOver his shoulder, he calls out, \"`3Before I go, please read the FAQs... and the Message of the Day is something you should check each time you log in. Don't be afraid to explore, but don't be afraid to run away either! And just remember, dying is part of life!`0\"`n");
+						set_module_pref("seenforest", 1);
+					};
+					if ($tutormsg) tutor_talk("%s", $tutormsg);
+					break;
+                case "shades":
+                    $tutormsg = "";
+                    $tutormsg = translate_inline("`tThe `6Li`^tt`6le `^An`6gel`t buzzes around you like crazy to examine the damage you have done. `^\"Oh yeah, it's not that bad after all. We should go to the mausoleum and ask Ramius to send you back upstairs.\"`t The `4Li`\$tt`4le `\$D`4e`\$v`4i`\$l`t giggles spitefully, but nods unexpectedly. `\$\"Exactly, boss! Let's go to a cemetery and find something to torment for a bit, old Ramius won't do that for nothing!\"`t");
+                    if ($tutormsg) tutor_talk("%s", $tutormsg);
+                    break;
+                case "graveyard":
+                    $playerfavor = $session['user']['deathpower'];
+                    $max = $session['user']['level'] * 5 + 50;
+                    $tutormsg = "";
+                    if ($playerfavor <= 5){
+                        $tutormsg = translate_inline("`t The `4Li`\$tt`4le `\$D`4e`\$v`4i`\$l`t seems to feel right at home here and pokes you incessantly with his trident as soon as you stop. `\$\"Come on, look for something to torment, but a bit dalli! And then off to the mausoleum!\"`t `tThe `6Li`^tt`6le `^An`6gel`t just shakes his head disapprovingly and polishes his halo in the meantime.");
+                    };
+                    if ($session['user']['soulpoints'] < $max) {
+                        $tutormsg = translate_inline("`tThe `6Li`^tt`6le `^An`6gel`t looks a little worried. `^\"You should go to the mausoleum and get healed. Even your immortal soul can be damaged, you know?\"`t The `4Li`\$tt`4le `\$D`4e`\$v`4i`\$l`t promptly mocks you: `\$\"Uuuuuuh, your soul is taking a beating!\"`t But it can't seem to raise a really meaningful objection to the suggestion of another companion.");
+                    };
+                    if ($tutormsg) tutor_talk("%s", $tutormsg);
+                    break;
+			}
 			break;
-		case "forest":
-			$tutormsg = "";
-			if ($goldtotal >= 48 && $wdam == 0){
-				$tutormsg = translate_inline("`\$\"Ey, Boss! Du hast doch genug Gold... geh' dir mal 'ne anst�ndige Waffe kaufen, dann kannst du denen noch viel besser eins auf die R�be geben!\"`t meint das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t.");
-			}elseif($goldtotal >= 48 && $adef == 0){
-				$tutormsg = translate_inline("`tDas `6En`^g`6el`^c`6hen`t l�sst dich wissen: `^\"Du hast jetzt genug Gold, um dir eine R�stung zu leisten. Wei�t du, ich w�rde mich wirklich besser f�hlen, wenn du sicherer bist.\"");
-			}elseif (!$session['user']['experience'] && !get_module_pref("seenforest")){
-				$tutormsg = translate_inline("`tDas `6En`^g`6el`^c`6hen`t fliegt Schleifen um deinen Kopf und erkl�rt:`^ \"Hier gibt es wirklich nicht viel zu sagen. Bek�mpfe die Monster, finde Gold und geh zum Heiler, wenn es n�tig ist.\"`t Der Kommentar des `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$ns`t l�sst nicht lange auf sich warten: `\$\"Vor allem solltest du aber Spa� haben, Boss!\"`t `n`nBeide verschwinden dann mit einem leisen 'plopp', zuvor noch h�rst du das `6En`^g`6el`^c`6hen`t fl�stern:  `^\"Bevor ich es vergesse, bitte lies die FAQ und besuche die Dorfschule... die News solltest du bei jedem Login lesen. Hab keine Angst Fremdes zu erkunden, aber renn lieber weg, wenn es n�tig sein sollte! Und erinnere dich daran: Sterben ist Teil des Lebens!\"");
-				set_module_pref("seenforest", 1);
-			};
-			if ($tutormsg) tutor_talk("%s", $tutormsg);
-			break;
-		case "shades":
-			$tutormsg = "";
-				$tutormsg = translate_inline("`tDas `6En`^g`6el`^c`6hen`t surrt wie wild um dich herum, um den Schaden zu begutachten, den du genommen hast. `^\"Ach ja, so schlimm ist es doch gar nicht. Wir sollten ins Mausoleum gehen und Ramius bitten, ob er dich nicht wieder nach Oben schickt.\"`t Das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t kichert geh�ssig, nickt aber wider Erwarten. `\$\"Genau, Boss! Lass' uns auf'n Friedhof gehen und 'n bisschen was zum Qu�len suchen, der olle Ramius macht das n�mlich nich f�r umme!\"`t");
-			if ($tutormsg) tutor_talk("%s", $tutormsg);
-			break;
-		case "graveyard":
-		$playerfavor = $session['user']['deathpower'];
-		$max = $session['user']['level'] * 5 + 50;
-			$tutormsg = "";
-				if ($playerfavor <= 5){
-				$tutormsg = translate_inline("`t Das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t scheint sich hier pudelwohl zu f�hlen und piekst dich �berm�tig mit dem Dreizack, sobald du stehen bleibst. `\$\"Los, was zum Qu�len suchen, aber bisschen dalli! Und dann ab ins Mausoleum!\"`t `tDas `6En`^g`6el`^c`6hen`t sch�ttelt nur missbilligend den Kopf und poliert derweil seinen Heiligenschein.");
-				};
-				if ($session['user']['soulpoints'] < $max) {
-			$tutormsg = translate_inline("`tDas `6En`^g`6el`^c`6hen`t sieht ein wenig besorgt aus. `^\"Du solltest ins Mausoleum gehen und dich heilen lassen. Auch deine unsterbliche Seele kann Schaden nehmen, wei�t du?\"`t Prompt �fft das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t nach: `\$\"Uuuuuuh, deine Seeeleee nimmt Schaaaden!\"`t Aber einen wirklich sinnvollen Einwand gegen den Vorschlag deines anderen Begleiters kann es anscheinend nicht vorbringen.");				
-				};
-			if ($tutormsg) tutor_talk("%s", $tutormsg);
-			break;
-			
-		}
-		break;
 	}
 	return $args;
 }
@@ -207,25 +206,51 @@ function tutor_run(){
 	$iname = getsetting("innname", LOCATION_INN); // name of capital's inn
 	$age = $session['user']['age'];
 	if ($op=="helpfiles") {
-		page_header("Hilfe!");
-		output("`4`c`bHilfe, ich habe mich verirrt!`b`c`n");
-		output("`tDu wei�t nicht, was du tun sollst?`n`n");
-		output("Legend of the Green Dragon hat zwar klein angefangen, aber mit der Zeit kamen viele neue Dinge dazu, die es zu erkunden gilt.`n`n");
-		output("F�r einen Neuling kann das ein wenig entmutigend sein.`n`n");
-		output("Um neuen Spielern zu helfen, hat das LotGD-Team dir das `6En`^g`6el`^c`6hen`t und das `4T`\$e`4u`\$f`4e`\$l`4c`\$h`4e`\$n`t zur Seite gestellt. Das sind die kleinen Kerlchen, die dir anfangs geraten haben, eine Waffe und eine R�stung zu kaufen. Aber was geschieht jetzt, wo sollst du hingehen und wohin f�hren die vielen T�ren, Gassen und Gesch�fte?`n`n");
-		output("Zu allererst: In diesem Spiel geht es um Entdeckungen und Abenteuer, deshalb wirst du hier nicht f�r jede Frage eine Antwort finden. F�r die meisten Sachen solltest du die FAQ lesen - oder probiere einfach aus und schau was passiert.`n`n");
-		output("Nat�rlich wissen wir, dass manche Dinge ganz und gar nicht offensichtlich sind. Wir werden dir nicht auf die Nase binden, was welchen Effekt hat, aber wir haben eine Liste mit Dingen zusammengestellt, die du zuerst ausprobieren solltest und nach denen uns neue Spieler regelm��ig fragen.`n`n");
-		output("Bitte bedenke, dass manche diese Hinweise Spoiler sind. Wenn du lieber alles selbst entdecken m�chtest, lies jetzt nicht weiter.`n`n");
-		output("Was haben all die Sachen in meiner Vital Info und Personal Info zu bedeuten? Die meisten davon brauchen dir kein Kopfzerbrechen bereiten. Die Anzeigen, die du jedoch aufmerksam beachten solltest, sind deine Lebenspunkte und der Erfahrungsbalken.");
-		output("Idealerweise sollte die Lebenspunkt-Anzeige gr�n bleiben. Pass auf, wenn sie gelb wird - oder noch schlimmer: rot. Das bedeutet, dass der Tod nahe ist. Manchmal w�re weglaufen schlauer, als st�ndig sein Leben zu riskieren. Vielleicht ist ja jemand in der N�he, der daf�r sorgt, dass du dich wieder besser f�hlst.`n`n");
-		output("Weiter unten ist der Erfahrungsbalken, der komplett rot anf�ngt und sich nach und nach wei� f�rben wird. Warte ab, bis er blau ist, bevor du in deiner Heimatstadt den Meister herausforderst. Wenn du noch keinen blauen Balken sehen kannst, bist du noch nicht bereit!`n`n");
-		output("Du suchst jemanden, den du kennst? Die Kriegerliste wird dir verraten, ob dein Freund gerade online ist oder nicht. Wenn das der Fall ist, ist die Ye Olde Mail (Postfach) eine gute M�glichkeit, ihn zu kontaktieren.`n`n");
-		output("Wof�r sind Edelsteine da? Sammle sie und w�ge ab, wof�r du sie ausgeben willst. Es gibt so einige Dinge, die du nur mit Edelsteinen kaufen kannst.`n`n");
-		output("Warst du schon im Boar's Head Inn, in Thalheim? Vielleicht m�chtest du ja etwas trinken, ein wenig unterhalten werden, oder mit den Leuten quatschen. Es ist immer eine gute Sache, wenn man die Charaktere im Boar's Head Inn kennt, denn die k�nnen einem jungen Krieger gute Hilfe leisten. Vielleicht befindest du eine �bernachtung der Kneipe ja auch f�r sicherer, als eine Nacht in den Feldern.`n`n");
-		output("Reisen kann gef�hrlich sein. Vergewissere dich, dass du deine Wertgegenst�nde irgendwo sicher deponiert hast, und dass du dich gesund f�hlst, bevor du losziehst.");
-		output("Hungrig, m�de, abenteuerlustig oder suchst du ein Haustier? Boogers Badest�tte, Saucys Dorfk�che, der Tattooladen und verschiedenen Tierh�ndler sind etwas, was du gesehen haben musst. Das sind Orte oder Gesch�fte in verschiedenen St�dten. Einige Ereignisse bringen Waldk�mpfe, Charmepunkte oder Lebenspunkte ein, andere dagegen nehmen sie dir.`n`n");
-		output("Wo aber ist denn jetzt der Drache? Alle fragen das. Du wirst ihn schon sehen, wenn du bereit bist, ihn zu bek�mpfen - und nicht vorher! Du wirst dich in Geduld �ben m�ssen und deine Kr�fte trainieren, w�hrend du wartest.`n`n");
-		output("Wenn du Fragen hast, die nicht in den FAQ erkl�rt werden, kannst du eine Petition an die Mods/Admins schreiben - behalte aber im Hinterkopf, dass das LotGD-Team keine Fragen beantwortet, wenn es sich um Spoiler handelt. Auch ein Besuch in der Dorfschule, die du in jeder Stadt findest, ist sicher keine schlechte Idee.");
+		page_header("Help!");
+		output("`%`c`bHelp Me, I'm Lost!`b`c`n");
+		output("`@Feeling lost?`n`n");
+		output("`#Legend of the Green Dragon started out small, but with time it has collected many new things to explore.`n`n");
+		output("To a newcomer, it can be a little bit daunting.`n`n");
+		output("To help new players, the Central staff created Eibwen, the imp.");
+		output("He's the little blue guy who told you to buy weapons when you first joined, and helped you choose a race.");
+		output("But what happens next, where should you go, and what are all the doors, alleys, and shops for?`n`n");
+		output("First of all: The game is about discovery and adventure.");
+		output("For this reason, you won't find all the answers to every little question.");
+		output("For most things, you should read the FAQs, or just try them and see.`n`n");
+		output("But we recognize that some things aren't at all obvious.");
+		output("So while we won't tell you what everything does, we've put together a list of things that you might want to try first, and that new players commonly ask us.`n`n");
+		output("Please understand that these hints are spoilers.");
+		output("If you'd rather discover on your own, don't read any further.`n`n");
+		output("`%What are all those things in my Vital Info, and Personal Info, I'm confused?");
+		output("A lot of it you don't need to worry about for the most part.");
+		output("The ones you should watch carefully are your hitpoints, and your experience.");
+		output("Ideally, you should keep that hitpoint bar green.");
+		output("And beware if it begins to turn yellow, or worse still, red.");
+		output("That tells you that death is near.");
+		output("Sometimes running would be smarter than risking death.");
+		output("Perhaps there's someone close by who can help you feel better.`n`n");
+		output("Lower down is the experience bar, which starts all red, and will gradually fill up with white.");
+		output("Wait until it goes blue before you challenge your master.");
+		output("If you can't see a blue bar, you aren't ready yet!`n`n");
+		output("Looking for someone you know?");
+		output("The List Warriors area will tell you if your friend is online right now or not.");
+		output("If they are, Ye Olde Mail is a good way to contact them.`n`n");
+		output("What are gems for?");
+		output("Hang onto these and be careful how you spend them.");
+		output("There are some things that you can only obtain with gems.`n`n");
+		output("Have you been into %s, in %s? Perhaps you'd like to try a drink, listen to some entertainment, or chat to people.",$iname, $city);
+		output("It's also a good idea to get to know the characters in the %s, because they can be quite helpful to a young warrior.",$iname);
+		output("You might even decide that sleeping in %s would be safer than in the fields.`n`n",$iname);
+		output("Travelling can be dangerous.");
+		output("Make sure you've placed your valuables somewhere safe, and that you're feeling healthy before you leave.`n`n");
+		output("Hungry, tired, feeling adventurous, or looking for a pet?");
+		output("The Spa, the Kitchen, the Tattoo Parlor, and the Stables are all places you might want to visit.");
+		output("These things are just some of the shops in different towns.");
+		output("Some of them give turns, charm or energy, and some take it away.`n`n");
+		output("Where's the dragon?");
+		output("They all ask this.");
+		output("You'll see her when you are ready to fight her, and not before, and you will need to be patient and build your strength while you wait.`n`n");
+		output("`QIf you have any questions which are not covered in the FAQ, you may wish to Petition for Help - bear in mind that the staff won't give you the answer if it will spoil the game for you.");
 		villagenav();
 		page_footer();
 	}

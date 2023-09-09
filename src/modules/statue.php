@@ -49,7 +49,7 @@ function statue_dohook($hookname, $args) {
 			$sql = "SELECT name FROM " . db_prefix("accounts") . " WHERE acctid='$hero'";
 			$result = db_query_cached($sql, "lasthero");
 			$row = db_fetch_assoc($result);
-			output("`n`@The inhabitants of %s are busy erecting a statue for their newest hero, `&%s`@ on the only statue pedestal around.  The remains of the statue that had stood there before lie in such ruins around the pedestal that it is no longer recognizable.`0`n",$session['user']['location'],$row['name']);
+			output("`n`@The inhabitants of %s are busy erecting a statue for their newest hero, `&%s`@ on the only statue pedestal around.  The remains of the statue that had stood there before lie in such ruins around the pedestal that it is no longer recognizable.`0`n",$session['user']['location'],$row['name'] ?? 'Eric');
 		}
 		break;
 	case "index":
@@ -59,7 +59,7 @@ function statue_dohook($hookname, $args) {
 			$sql = "SELECT name FROM " . db_prefix("accounts") . " WHERE acctid='$hero'";
 			$result = db_query_cached($sql, "lasthero");
 			$row = db_fetch_assoc($result);
-			$heroname = $row['name'];
+			$heroname = $row['name'] ?? 'Eric';
 		}
 		output("`@The most recent hero of the realm is: `&%s`0`n`n",$heroname);
 		break;

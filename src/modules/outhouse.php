@@ -38,7 +38,7 @@ function outhouse_getmoduleinfo(){
 		"prefs"=>array(
 			"Gnomish Outhouse User Preferences,title",
 			"usedouthouse"=>"Used Outhouse Today,bool|0",
-			"stinkebuff"=>"Wird bald mit dem Stinkebuff belegt.,bool|0"
+			"stinkebuff"=>"Will soon be given the stinky buff.,bool|0"
 		),
 		"settings"=>array(
 			"Gnomish Outhouse Settings,title",
@@ -51,37 +51,37 @@ function outhouse_getmoduleinfo(){
 			"givegempercent"=>"Percent chance of getting a gem if you wash,range,0,100,1|25",
 			"giveturnchance"=>"Percent chance of a free forest fight if you wash,range,0,100,1|0",
 			//Claudias modification
-			"anzeige1"=>"Poetischer Text 1|",
-			"anzeige2"=>"Poetischer Text 2|",
-			"anzeige3"=>"Poetischer Text 3|",
-			"anzeige4"=>"Poetischer Text 4|",
-			"anzeige5"=>"Poetischer Text 5|",
-			"anzeige6"=>"Poetischer Text 6|",
-			"anzeige7"=>"Poetischer Text 7|",
-			"anzeige8"=>"Poetischer Text 8|",
-			"anzeige9"=>"Poetischer Text 9|",
-			"anzeige10"=>"Poetischer Text 10|",
-			"author1"=>"Poetischer Author 1|",
-			"author2"=>"Poetischer Author 2|",
-			"author3"=>"Poetischer Author 3|",
-			"author4"=>"Poetischer Author 4|",
-			"author5"=>"Poetischer Author 5|",
-			"author6"=>"Poetischer Author 6|",
-			"author7"=>"Poetischer Author 7|",
-			"author8"=>"Poetischer Author 8|",
-			"author9"=>"Poetischer Author 9|",
-			"author10"=>"Poetischer Author 10|",
-			"authorid1"=>"Poetischer Author 1|",
-			"authorid2"=>"Poetischer Author 2|",
-			"authorid3"=>"Poetischer Author 3|",
-			"authorid4"=>"Poetischer Author 4|",
-			"authorid5"=>"Poetischer Author 5|",
-			"authorid6"=>"Poetischer Author 6|",
-			"authorid7"=>"Poetischer Author 7|",
-			"authorid8"=>"Poetischer Author 8|",
-			"authorid9"=>"Poetischer Author 9|",
-			"authorid10"=>"Poetischer Author 10|",
-			"laufzahl"=>"Neuster Text|0"
+			"anzeige1"=>"Poetic Text 1|",
+			"anzeige2"=>"Poetic Text 2|",
+			"anzeige3"=>"Poetic Text 3|",
+			"anzeige4"=>"Poetic Text 4|",
+			"anzeige5"=>"Poetic Text 5|",
+			"anzeige6"=>"Poetic Text 6|",
+			"anzeige7"=>"Poetic Text 7|",
+			"anzeige8"=>"Poetic Text 8|",
+			"anzeige9"=>"Poetic Text 9|",
+			"anzeige10"=>"Poetic Text 10|",
+			"author1"=>"Poetic Author 1|",
+			"author2"=>"Poetic Author 2|",
+			"author3"=>"Poetic Author 3|",
+			"author4"=>"Poetic Author 4|",
+			"author5"=>"Poetic Author 5|",
+			"author6"=>"Poetic Author 6|",
+			"author7"=>"Poetic Author 7|",
+			"author8"=>"Poetic Author 8|",
+			"author9"=>"Poetic Author 9|",
+			"author10"=>"Poetic Author 10|",
+			"authorid1"=>"Poetic Author 1|",
+			"authorid2"=>"Poetic Author 2|",
+			"authorid3"=>"Poetic Author 3|",
+			"authorid4"=>"Poetic Author 4|",
+			"authorid5"=>"Poetic Author 5|",
+			"authorid6"=>"Poetic Author 6|",
+			"authorid7"=>"Poetic Author 7|",
+			"authorid8"=>"Poetic Author 8|",
+			"authorid9"=>"Poetic Author 9|",
+			"authorid10"=>"Poetic Author 10|",
+			"laufzahl"=>"Newest Text|0"
 			//end Claudias modification
 		)
 	);
@@ -126,10 +126,10 @@ function outhouse_dohook($hookname, $args){
 	}elseif ($hookname=="newday"){//claudias Modifikation
 	  if(get_module_pref('stinkebuff')==true){
 	    output('`q--------------------------------------------------------------------------------------------------------------------------`n');
-	    output("Wegen uns�glicher Schmiererei im Toilettenhaus hat dich die Waschraumfee mit einem Fluch belegt.`n");
+	    output("The washroom fairy has put a curse on you because of unseemly graffiti in the toilet block.`n");
 	    output('--------------------------------------------------------------------------------------------------------------------------`n`n');
 			apply_buff("stinkebuff", array(
-			  "name" => "`qgr�sslicher Gestank",
+			  "name" => "`qhorrible smell",
 				"rounds" => -1,
 				"defmod" => 0.75,
 				"allowintrain" => 1,
@@ -180,9 +180,9 @@ function outhouse_run(){
 			output("He politely turns his back to you and finishes cleaning the wash stand.`n");
 		}
     //Claudias modification
-    output('`nW�hrend du dich v�llig entspannt auf den Donnerbalken setzt, fallen dir einige Schnitzereien in der sonst sauberen Holzt�r auf:`n`n`n');
+    output('`nAs you sit on the latrine, completely relaxed, you notice some carvings in the otherwise clean wooden door:`n`n`n');
     outhouse_show_kritzel();
-    addnav("Etwas in die T�r ritzen","runmodule.php?module=outhouse&op=ritze");
+    addnav("Carve something into the door","runmodule.php?module=outhouse&op=ritze");
     //end Claudias modification
 		$session['user']['gold'] -= $cost;
 		debuglog("spent $cost gold to use the outhouse");
@@ -255,8 +255,8 @@ function outhouse_run(){
 		require_once("lib/forest.php");
 		forest(true);
 	}elseif($op=="ritze"){//Claudias modification
-    page_header('Die T�r zerkratzen');
-    output('W�hrend du deinen Gesch�ften nachgehst, hast du nat�rlich deine H�nde frei, so frei wie deinen Kopf. Mit einem kleinen Holzsplitter f�ngst du an, eine Nachricht f�r deine Nachfolger zu hinterlegen.`n');
+    page_header('Scratching the door');
+    output('Of course, while you go about your business, you have your hands free, as free as your head. With a small splinter of wood you begin to leave a message for your successors.`n');
     $link=appendcount('runmodule.php?module=outhouse&op=ratze');
     rawoutput("<form action='$link' method='POST'>");
     rawoutput("<input name='text' value=''>");
@@ -266,9 +266,9 @@ function outhouse_run(){
 		addnav("Leave", "runmodule.php?module=outhouse&op=nowash");
     addnav('',$link);//damit kein badnav beim formular
 	}elseif($op=="ratze"){
-    page_header('Eine Neue Nachricht in der T�r');
+    page_header('A new message in the door');
 	  $newtext=httppost('text');
-	  output('Nach getaner Arbeit betrachtest du noch einmal dein Werk in der Gesammtheit der T�r:`n');
+	  output('After the carving is done, you look again at your work:`n');
 	  $int=get_module_setting("laufzahl");
 	  $int++;
 	  if($int==11)$int=1;
@@ -281,16 +281,16 @@ function outhouse_run(){
 		addnav("Leave", "runmodule.php?module=outhouse&op=nowash");
   }elseif($op=="lusche"){
     $nummer=httpget('nummer');
-    page_header('Nachricht '.$nummer.' l�schen');	  
-	  output('Nachricht '.$nummer.' wurde gel�scht.`n');
+    page_header('News '.$nummer.' delete message');
+	  output('News '.$nummer.' was deleted.`n');
 	  if($strafe==true){
 	    set_module_pref('stinkebuff',true,false,get_module_setting('authorid'.$nummer));
 			$to = get_module_setting('authorid'.$nummer);
-      $subject = '`$Du wurdest verflucht!';
-      $body = array('`QDie Waschraumfee war �ber deine Spr�che an der Klowand nicht am�siert. Deswegen wird dich morgen ein ganz besonderer Freund von ihr einen Tag lang begleiten.');
+      $subject = '`$You have been cursed!';
+      $body = array('`QThe washroom fairy wasn\'t amused by your comments on the toilet wall. That\'s why a very special friend of hers will accompany you for a day tomorrow.');
 			require_once("lib/systemmail.php");
 			systemmail($to, $subject, $body);
-			output('Wegen uns�glichem Gekrakel wurde der Verfasser verwarnt.');
+			output('The author was warned for unspeakable scrawls.');
 	  }
 	  set_module_setting("anzeige".$nummer,'');
 	  set_module_setting("author".$nummer,'');
@@ -299,13 +299,13 @@ function outhouse_run(){
 	      set_module_setting("laufzahl",10);
 	    }else{
         set_module_setting("laufzahl",($nummer-1));
-        }	
+        }
       }
-    addnav('Zur�ck in den Wald', 'forest.php'); 
-    addnav("zur�ck zur L�sch�bersicht","runmodule.php?module=outhouse&op=admin");
+    addnav('Back to the forest', 'forest.php');
+    addnav("back to the deletion overview","runmodule.php?module=outhouse&op=admin");
   }elseif($op=="luscheall"){
-    page_header('Alle Nachrichten L�schen');	  
-	  output('Die kompletten Nachrichten wurden gel�scht.');
+    page_header('Delete all messages');
+	  output('All the messages have been deleted.');
 	  set_module_setting("anzeige1",'');
 	  set_module_setting("anzeige2",'');
 	  set_module_setting("anzeige3",'');
@@ -325,42 +325,42 @@ function outhouse_run(){
     set_module_setting("author7",'');
     set_module_setting("author8",'');
     set_module_setting("author9",'');
-    set_module_setting("author10",'');	
-    set_module_setting("laufzahl",'0');	
-    addnav('Zur�ck in den Wald', 'forest.php');  
+    set_module_setting("author10",'');
+    set_module_setting("laufzahl",'0');
+    addnav('Back to the forest', 'forest.php');
   }elseif($op=="admin"){
-    page_header('Kloh�uschenadmin');
-    output('Folgende Werke sind an der T�r zu sehen:`n`n`n');
+    page_header('Toilet house admin');
+    output('The following works can be seen on the door:`n`n`n');
     outhouse_show_kritzel(true);
-    output('M�chtest du welche l�schen?');
+    output('Do you want to delete any?');
     tlschema('raus hier');
     addnav("raus hier");
-    addnav('Zur�ck in den Wald', 'forest.php');
-    tlschema('Nur L�schen');
-    addnav("Nur L�schen");
-    addnav("l�sche Text 1", "runmodule.php?module=outhouse&op=lusche&nummer=1");
-    addnav("l�sche Text 2", "runmodule.php?module=outhouse&op=lusche&nummer=2");
-    addnav("l�sche Text 3", "runmodule.php?module=outhouse&op=lusche&nummer=3");
-    addnav("l�sche Text 4", "runmodule.php?module=outhouse&op=lusche&nummer=4");
-    addnav("l�sche Text 5", "runmodule.php?module=outhouse&op=lusche&nummer=5");
-    addnav("l�sche Text 6", "runmodule.php?module=outhouse&op=lusche&nummer=6");
-    addnav("l�sche Text 7", "runmodule.php?module=outhouse&op=lusche&nummer=7");
-    addnav("l�sche Text 8", "runmodule.php?module=outhouse&op=lusche&nummer=8");
-    addnav("l�sche Text 9", "runmodule.php?module=outhouse&op=lusche&nummer=9");
-    addnav("l�sche Text 10", "runmodule.php?module=outhouse&op=lusche&nummer=10");
-    addnav("l�sche alles", "runmodule.php?module=outhouse&op=luscheall");
-    addnav("L�sche mit Bestrafung");
-    tlschema('L�sche mit Bestrafung');
-    addnav("bestrafe Text 1", "runmodule.php?module=outhouse&op=lusche&nummer=1&strafe=true");
-    addnav("bestrafe Text 2", "runmodule.php?module=outhouse&op=lusche&nummer=2&strafe=true");
-    addnav("bestrafe Text 3", "runmodule.php?module=outhouse&op=lusche&nummer=3&strafe=true");
-    addnav("bestrafe Text 4", "runmodule.php?module=outhouse&op=lusche&nummer=4&strafe=true");
-    addnav("bestrafe Text 5", "runmodule.php?module=outhouse&op=lusche&nummer=5&strafe=true");
-    addnav("bestrafe Text 6", "runmodule.php?module=outhouse&op=lusche&nummer=6&strafe=true");
-    addnav("bestrafe Text 7", "runmodule.php?module=outhouse&op=lusche&nummer=7&strafe=true");
-    addnav("bestrafe Text 8", "runmodule.php?module=outhouse&op=lusche&nummer=8&strafe=true");
-    addnav("bestrafe Text 9", "runmodule.php?module=outhouse&op=lusche&nummer=9&strafe=true");
-    addnav("bestrafe Text 10", "runmodule.php?module=outhouse&op=lusche&nummer=10&strafe=true");
+    addnav('Back to the forest', 'forest.php');
+    tlschema('Just delete');
+    addnav("Just delete");
+    addnav("delete Text 1", "runmodule.php?module=outhouse&op=lusche&nummer=1");
+    addnav("delete Text 2", "runmodule.php?module=outhouse&op=lusche&nummer=2");
+    addnav("delete Text 3", "runmodule.php?module=outhouse&op=lusche&nummer=3");
+    addnav("delete Text 4", "runmodule.php?module=outhouse&op=lusche&nummer=4");
+    addnav("delete Text 5", "runmodule.php?module=outhouse&op=lusche&nummer=5");
+    addnav("delete Text 6", "runmodule.php?module=outhouse&op=lusche&nummer=6");
+    addnav("delete Text 7", "runmodule.php?module=outhouse&op=lusche&nummer=7");
+    addnav("delete Text 8", "runmodule.php?module=outhouse&op=lusche&nummer=8");
+    addnav("delete Text 9", "runmodule.php?module=outhouse&op=lusche&nummer=9");
+    addnav("delete Text 10", "runmodule.php?module=outhouse&op=lusche&nummer=10");
+    addnav("delete all", "runmodule.php?module=outhouse&op=luscheall");
+    addnav("Delete with punishment");
+    tlschema('Delete with punishment');
+    addnav("punish Text 1", "runmodule.php?module=outhouse&op=lusche&nummer=1&strafe=true");
+    addnav("punish Text 2", "runmodule.php?module=outhouse&op=lusche&nummer=2&strafe=true");
+    addnav("punish Text 3", "runmodule.php?module=outhouse&op=lusche&nummer=3&strafe=true");
+    addnav("punish Text 4", "runmodule.php?module=outhouse&op=lusche&nummer=4&strafe=true");
+    addnav("punish Text 5", "runmodule.php?module=outhouse&op=lusche&nummer=5&strafe=true");
+    addnav("punish Text 6", "runmodule.php?module=outhouse&op=lusche&nummer=6&strafe=true");
+    addnav("punish Text 7", "runmodule.php?module=outhouse&op=lusche&nummer=7&strafe=true");
+    addnav("punish Text 8", "runmodule.php?module=outhouse&op=lusche&nummer=8&strafe=true");
+    addnav("punish Text 9", "runmodule.php?module=outhouse&op=lusche&nummer=9&strafe=true");
+    addnav("punish Text 10", "runmodule.php?module=outhouse&op=lusche&nummer=10&strafe=true");
     tlschema();
   }else{//end Claudias modification
 		page_header("The Outhouses");
@@ -379,13 +379,13 @@ function outhouse_run(){
 			addnav("Public Toilet: (free)", "runmodule.php?module=outhouse&op=free");
 			addnav("Hold it", "forest.php");
 			//Claudias modification
-			if($session['user']['superuser'])addnav("Admin L�sche Poesie","runmodule.php?module=outhouse&op=admin");
+			if($session['user']['superuser'])addnav("Admin Delete Poetry","runmodule.php?module=outhouse&op=admin");
 		}elseif($session['user']['superuser']){
 		  page_header("The Outhouses");
 			output("The Outhouses are closed for repairs.`n");
-			output("You will have to hold it till tomorrow!");		  
-		  addnav("Admin L�sche Poesie","runmodule.php?module=outhouse&op=admin");
-		  addnav('Zur�ck in den Wald', 'forest.php');
+			output("You will have to hold it till tomorrow!");
+		  addnav("Admin Delete Poetry","runmodule.php?module=outhouse&op=admin");
+		  addnav('Back to the forest', 'forest.php');
 		}else{//end Claudias modification
 			switch(e_rand(1,3)){
 			case 1:
@@ -422,7 +422,7 @@ function outhouse_show_kritzel($admin=false){//Claudias modification
   );
   $tmpint=$int;//inizialize infos
   if($tmpint==0){
-    output('Zumindest dachtest du, dass dort welche seien sollten. Vielleicht hat sie wer entfernen lassen?');
+    output('At least you thought there should be some there. Maybe someone had them removed?');
   }else{
     for($count=0;$count<=9;$count++){//prozessing information
      if($text[$tmpint]==""){
@@ -430,7 +430,7 @@ function outhouse_show_kritzel($admin=false){//Claudias modification
      if($tmpint<1)$tmpint=10;
    }else{
     if($admin){
-      output('Text '.$tmpint.' wurde von '.get_module_setting("author".$tmpint).' geschrieben:`n`c'.$text[$tmpint].'`c`n`n`n');//output information
+      output('Text '.$tmpint.' written by '.get_module_setting("author".$tmpint).':`n`c'.$text[$tmpint].'`c`n`n`n');//output information
     }else{
       output('`c'.$text[$tmpint].'`c`n`n`n');//output information
     }
@@ -438,6 +438,6 @@ function outhouse_show_kritzel($admin=false){//Claudias modification
      if($tmpint<1)$tmpint=10;
    }
   }
- }  
+ }
 }
 ?>

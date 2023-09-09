@@ -6,15 +6,15 @@ function gameoptions_getmoduleinfo(){
 		"author"=>"`2R`@o`ghe`2n `Qvon `2Fa`@lk`genbr`@uch`&",
 		"category" => "General",
 		"prefs"=>array(
-			"Farben und Chat Optionen,title",
-			"user_layout"=>"Taubendarstellung,enum,0,Nach Absender,1, Nach Eingangsdatum,2,Wie fr�her",
-            "user_showcolors"=>"Nutzer sieht Farbauswahl,enum,0,Als Dropdown-Men�,1,Als Farbliste,2,Gar nicht",
-			"Rollenspiel,title",
-			"lastwritingchar"=>"Zuletzt benutzter account,int",
-			"autorepair_ctitle"=>"Automatische Titelreparatur,string",
-			"autorepair_name"=>"Automatische Namesreparatur,string",
-			"Chatspeicherung,title",
-			"lastpostvalues"=>"Zuletzt zwischengespeicherte Werte"
+			"Colors and chat options,title",
+			"user_layout"=>"Layout,enum,0,By Sender,1, By date of receipt,2,By time",
+            "user_showcolors"=>"User sees color selection,enum,0,As a drop-down menu,1,As a color list,2,Not at all",
+			"RPG,title",
+			"lastwritingchar"=>"Last used account,int",
+			"autorepair_ctitle"=>"Automatic title repair,string",
+			"autorepair_name"=>"Automatic name repair,string",
+			"Chat storage,title",
+			"lastpostvalues"=>"Most recently cached values"
 		),
 
 	);
@@ -45,7 +45,7 @@ function gameoptions_dohook($hookname, $args){
 	// 	set_module_pref("lastwritingchar",$session['user']['acctid']);
 	// 	$ctitle = get_module_pref("autorepair_ctitle");
 	// 	$name   = get_module_pref("autorepair_name");
-		
+
 		break;
 	}
 	return $args;

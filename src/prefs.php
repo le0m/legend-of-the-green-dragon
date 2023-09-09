@@ -158,11 +158,11 @@ if ($op=="suicide" && getsetting("selfdelete",0)!=0) {
 		"timestamp"=>"Show timestamps in commentary?,enum,0,None,1,Real Time [12/25 1:27pm],2,Relative Time (1h35m)",
 		"timeformat"=>array("Timestamp format (currently displaying time as %s whereas default format is \"[m/d h:ia]\"),string,20",
 			date($session['user']['prefs']['timeformat'],
-				strtotime("now") + ($session['user']['prefs']['timeoffset'] * 60 * 60))),
+				strtotime("now") + (($session['user']['prefs']['timeoffset'] ?? 1) * 60 * 60))),
 		"timeoffset"=>array("Hours to offset time displays (%s currently displays as %s)?,int",
 			date($session['user']['prefs']['timeformat']),
 			date($session['user']['prefs']['timeformat'],
-				strtotime("now") + ($session['user']['prefs']['timeoffset'] * 60 * 60))),
+				strtotime("now") + (($session['user']['prefs']['timeoffset'] ?? 1) * 60 * 60))),
 		"ihavenocheer"=>"`0Always disable all holiday related text replacements (such as a`1`0l`1`0e => e`1`0g`1`0g n`1`0o`1`0g for December),bool",
 		"bio"=>"Short Character Biography (255 chars max),string,255",
 		"nojump"=>"Don't jump to comment areas after refreshing or posting a comment?,bool",
@@ -229,7 +229,7 @@ if ($op=="suicide" && getsetting("selfdelete",0)!=0) {
 			} else {
 				$x = explode("|", $val);
 			}
-			
+
 			if(is_array($x[0])) $x[0] = call_user_func_array('sprintf', $x[0]);
 			$type = explode(",", $x[0]);
 			if (isset($type[1])) $type = trim($type[1]);
@@ -290,7 +290,7 @@ if ($op=="suicide" && getsetting("selfdelete",0)!=0) {
 			$mdata[$row1['modulename']."___".$row1['setting']] = $row1['value'];
 		}
 	}
-	
+
 	$form = array_merge($form, $msettings);
 	$prefs = array_merge($prefs, $mdata);
 	rawoutput("<form action='prefs.php?op=save' method='POST' onSubmit='return(md5pass)'>");

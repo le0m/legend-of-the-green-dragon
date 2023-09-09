@@ -7,11 +7,11 @@ function ajax_chat_getmoduleinfo(){
 		"category"=>"General",
 		"download"=>"",
 		"prefs"=>array(
-		    "Ajax-Optionen,title",
+		    "Ajax Options,title",
 		    "script"		=>"Scriptname",
 		    "request"		=>"Requesturl",
-		    "user_autorefresh"	=>"Aktiviere automatisches Update der Chats,bool|false",
-		    "allowednavs"	=>"Meine Navs als Array",
+		    "user_autorefresh"	=>"Enable automatic chat updates,bool|false",
+		    "allowednavs"	=>"My navs as an Array",
 		     "activatetime"	=>"Last refresh for timeout"
 		)
 	);
@@ -42,7 +42,7 @@ function ajax_chat_dohook($hookname,$args){
 			set_module_pref("script",$_SERVER['SCRIPT_NAME']);
 			set_module_pref("request",$_SERVER['REQUEST_URI']);
 			set_module_pref("activatetime",strtotime("now"));
-					
+
 			rawoutput("<script language='JavaScript'>");
 			// rawoutput("window.setInterval(function() {getContentRequest();}, 10000);");
 			rawoutput("window.setInterval(function() {getMailRequest(); getContentRequest();}, 10000);");
@@ -62,11 +62,11 @@ function ajax_chat_dohook($hookname,$args){
 					    document.getElementById('mail').innerHTML=xmlhttp.responseText;
 					}
 				    }
-				    
+
 				    xmlhttp.open('GET', 'ajax.php?op=mail&t=' + Math.random() , true);
 				    xmlhttp.send();
-				    
-				    
+
+
 				}");
 			rawoutput("function getContentRequest() {
 				    var xmlhttp = null;
@@ -84,17 +84,17 @@ function ajax_chat_dohook($hookname,$args){
 					    document.getElementById('commentary').innerHTML=xmlhttp.responseText;
 					}
 				    }
-				    
+
 				    xmlhttp.open('GET', 'ajax.php?op=content&section=" . $args['section'] . "&t=' + Math.random() , true);
 				    xmlhttp.send();
-				    
-				    
+
+
 				}");
 			rawoutput("</script>");
 		    }
 		    break;
 
-		
+
 	}
 	return $args;
 }

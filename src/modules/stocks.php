@@ -72,7 +72,7 @@ function stocks_dohook($hookname, $args) {
 				$sql = "SELECT name FROM " . db_prefix("accounts") . " WHERE acctid='$stocks'";
 				$result = db_query_cached($sql, "stocks");
 				$row = db_fetch_assoc($result);
-				output("`n`@Next to the stables is a set of stocks in which `&%s`@ seems to have become stuck!",$row['name']);
+				output("`n`@Next to the stables is a set of stocks in which `&%s`@ seems to have become stuck!",$row['name'] ?? 'none');
 				output_notl(" [");
 				rawoutput("<a href='village.php?op=stocks'>$examine</a>");
 				output_notl("]`0`n");

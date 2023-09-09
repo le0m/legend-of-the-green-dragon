@@ -145,19 +145,19 @@ function specialtythiefskills_dohook($hookname,$args){
 		$script = $args['script'];
 		if ($uses > 0) {
 			addnav(array("$ccode$name (%s points)`0", $uses), "");
-			addnav(array("$ccode &#149; Diebstahl`7 (%s)`0", 1), 
+			addnav(array("$ccode &#149; Steal`7 (%s)`0", 1),
 					$script."op=fight&skill=$spec&l=1", true);
 		}
 		if ($uses > 1) {
-			addnav(array("$ccode &#149; Waffe Vergiften`7 (%s)`0", 2),
+			addnav(array("$ccode &#149; Poison weapon`7 (%s)`0", 2),
 					$script."op=fight&skill=$spec&l=2",true);
 		}
 		if ($uses > 2) {
-			addnav(array("$ccode &#149; Sand in ihren Augen`7 (%s)`0", 3),
+			addnav(array("$ccode &#149; Throw sand`7 (%s)`0", 3),
 					$script."op=fight&skill=$spec&l=3",true);
 		}
 		if ($uses > 4) {
-			addnav(array("$ccode &#149; Angriff von Hinten`7 (%s)`0", 5),
+			addnav(array("$ccode &#149; Backstab`7 (%s)`0", 5),
 					$script."op=fight&skill=$spec&l=5",true);
 		}
 		break;
@@ -173,7 +173,7 @@ function specialtythiefskills_dohook($hookname,$args){
 						case 1:
 						case 2:
 							$snatch = e_rand($session['user']['level']*10,$session['user']['level']*50);
-							$startmsg = translate_inline("`^Unbemerkt ziehst du {badguy}`^ $snatch Gold aus der Tasche!");
+							$startmsg = translate_inline("`^Unnoticed, you pull $snatch gold out of {badguy}`^'s pocket!");
 							$session['user']['gold']+= $snatch;
 							break;
 						case 3:
@@ -188,7 +188,7 @@ function specialtythiefskills_dohook($hookname,$args){
             	//add_item((int)$snatch['itemid']);
             	//break;
             case 5:
-            	$startmsg = translate_inline("`^Als {badguy}`^ dich bei deinem Versuch erwischt und beinahe in zwei St�cke teilt, fragst du dich, warum du ihn �berhaupt bestehlen willst, wenn du ihn doch sowieso kaltstellen musst!");
+            	$startmsg = translate_inline("`^When {badguy}`^ catches you trying and almost splits you in two, you wonder why you even want to steal from him when you have to kill him anyway!");
             	break;
           }
 					apply_buff('ts1',array(
@@ -200,42 +200,42 @@ function specialtythiefskills_dohook($hookname,$args){
 					break;
 				case 2:
 					apply_buff('ts2',array(
-						"startmsg"=>"`^Du tr�gst etwas Gift auf {weapon}`^ auf.",
-						"name"=>"`^Waffe Vergiften",
+						"startmsg"=>"`^You apply some poison to {weapon}`^.",
+						"name"=>"`^Poison weapon",
 						"rounds"=>$session['user']['level'],
-						"wearoff"=>"`6Das Blut deiner Opfer hat das Gift von {weapon}`6 gewaschen.",
+						"wearoff"=>"`6The blood of your victims has washed the poison from {weapon}`6.",
 						"atkmod"=>1.2,
 						"damageshield"=>-0.33,
-						"effectmsg"=>"`6Das Gift richtet zus�tzliche `^{damage}`6 Schadenspunkte bei {badguy} an!", 
+						"effectmsg"=>"`6The poison does additional `^{damage}`6 damage to {badguy}!",
 						"schema"=>"module-specialtythiefskills"
 					));
 					break;
 				case 3:
 					apply_buff('ts3', array(
-						"startmsg"=>"`^Mit einem kraftvollen Tritt schleuderst du {badguy}`^ einen Schwall Sand ins Gesicht!",
-						"name"=>"`^Sand in ihren Augen",
+						"startmsg"=>"`^With a powerful kick you throw a torrent of sand into {badguy}`^'s face'!",
+						"name"=>"`^Throw sand",
 						"rounds"=>3,
-						"wearoff"=>"`6Die Augen deines Opfers haben sich wieder erholt.",
+						"wearoff"=>"`6Your victim's eyes have recovered.",
 						"badguyatkmod"=>0.45,
 						"badguydefmod"=>0.45,
-						"roundmsg"=>"`^{badguy} `^kann nichts mehr sehen und schl�gt wild um sich!",
+						"roundmsg"=>"`^{badguy} `^can no longer see anything and is thrashing wildly!",
 						"badguyatkmod"=>0,
 						"schema"=>"module-specialtythiefskills"
 					));
 					apply_buff('ts3b', array(
-						"name"=>"`^Dreck",
+						"name"=>"`^Dirt",
 						"rounds"=>1,
 						"minioncount"=>1,
 						"minbadguydamage"=>floor($session['user']['attack']/2),
 						"maxbadguydamage"=>$session['user']['level']+$session['user']['attack']/2,
-						"effectmsg"=>"`6{badguy} `6kratzt sich vor Schmerz beinahe selbst die Augen aus und erleidet `^{damage}`6 Punkte Schaden!",
+						"effectmsg"=>"`6{badguy} `6almost scratches his own eyes out in pain and takes `^{damage}`6 points of damage!",
 						"schema"=>"module-specialtythiefskills"
 					));
 					break;
 				case 5:
 					apply_buff('ts5',array(
-						"startmsg"=>"`^Mit den F�higkeiten eines Meisterdiebs verschwindest du und schiebst {badguy} eine d�nne Klinge zwischen die R�ckenwirbel!",
-						"name"=>"`^Angriff von Hinten",
+						"startmsg"=>"`^With the skills of a master thief, you disappear and slip a thin blade between {badguy} 's vertebrae!",
+						"name"=>"`^Backstab",
 						"rounds"=>1,
 						"atkmod"=>4,
 						"defmod"=>2,

@@ -176,8 +176,8 @@ function injectcommentary($section, $talkline, $comment, $schema=false,$alternat
 					output("`\$Warning: Account manipulation!");
 				}
 			} else {
-				if ($row['comment']!=stripslashes($commentary) ||
-						$row['author']!=$session['user']['acctid']){
+				if ((!empty($row['comment']) && $row['comment']!=stripslashes($commentary)) ||
+						(!empty($row['author']) && $row['author']!=$session['user']['acctid'])){
 					injectrawcomment($section, $session['user']['acctid'],
 							$commentary);
 					$session['user']['laston']=date("Y-m-d H:i:s");
@@ -666,7 +666,7 @@ function talkform($section,$talkline,$limit=20,$schema=false){
 		tmp = tmp + '`' + color;
 		document.getElementById(elementid).value = tmp;
 	}
-");	
+");
 	rawoutput("</script>");
 
 	$colors = GetColorList();
@@ -677,7 +677,7 @@ function talkform($section,$talkline,$limit=20,$schema=false){
 	// 	")" => "colLtBlack",
 	// 	"B" => "colmousegrey",
 	// 	"(" => "colsparkgray",
-	// 	"~" => "colBlack", 
+	// 	"~" => "colBlack",
 	// 	"X" => "colbeige",
 	// 	"a" => "collightyellow",
 	// 	"^" => "colLtYellow",
@@ -773,7 +773,7 @@ function talkform($section,$talkline,$limit=20,$schema=false){
 			tmp = tmp + '#[' + color.replace('#','') + ']';
 			document.getElementById('inputinsertcommentary').value = tmp;
 		},false);
-	");	
+	");
 	rawoutput("</script>");
 	}
 	elseif ($displaymode==1) {
@@ -786,11 +786,11 @@ function talkform($section,$talkline,$limit=20,$schema=false){
 				$break=0;
 			}
 		}
-	}	
+	}
 	if ($displaymode!=0) { //All other Settings
 		rawoutput("<a href='#colors' onClick='addColor(\"{$session['user']['name']}\", \"inputinsertcommentary\");'>");
 		output_notl($session['user']['name']);
-		rawoutput("</a><br>");		
+		rawoutput("</a><br>");
 	}
 
 
@@ -843,7 +843,7 @@ function talkform($section,$talkline,$limit=20,$schema=false){
 	} else {
 		previewfield("insertcommentary", $session['user']['name'], $talkline, true, array("size"=>"60", "maxlength"=>5000-$tll),false,false,$writingcharlist);
 	}
-		
+
 	rawoutput("<input type='hidden' name='talkline' value='$talkline'>");
 	rawoutput("<input type='hidden' name='schema' value='$schema'>");
 	rawoutput("<input type='hidden' name='counter' value='{$session['counter']}'>");

@@ -138,6 +138,7 @@ function forestdefeat($enemies,$where="in the forest"){
 			output_notl("`b`&%s`0`b`n",$msg);
 		}
 	}
+    $lastname = '';
 	if (count($names) > 1) $lastname = array_pop($names);
 	$enemystring = join(", ", $names);
 	$and = translate_inline("and");

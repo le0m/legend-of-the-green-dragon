@@ -65,6 +65,7 @@
 			} else {
 				$sql = "SELECT buffid, buffname, buffshortname FROM ".db_prefix("itembuffs");
 				$result = db_query($sql);
+				$buffs = [];
 				while ($row = db_fetch_assoc($result)){
 				  $row['buffname'] = str_replace(",", " ", $row['buffname']);
 				  $row['buffshortname'] = str_replace(",", " ", $row['buffshortname']);

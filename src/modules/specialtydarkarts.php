@@ -141,7 +141,7 @@ function specialtydarkarts_dohook($hookname,$args){
     if ($session['user']['specialty'] == $spec) $amt = $amt + $bonus;
     set_module_pref("uses", $amt);
     if( isset($companions['skeleton_warrior']) ){
-      output("`4`nDein Skelettkrieger zerf�llt angesichts des anbrechenden Tages zu Staub.`n");
+      output("`4`nYour skeletal warrior crumbles to dust as the day dawns.`n");
       unset($companions['skeleton_warrior']);
     }
     break;
@@ -151,7 +151,7 @@ function specialtydarkarts_dohook($hookname,$args){
     if ($uses > 0) {
       addnav(array("$ccode$name (%s points)`0", $uses),"");
       if (getsetting("enablecompanions", true)) {
-        addnav(array("$ccode &#149; Skelettkrieger`7 (%s)`0", 1),
+        addnav(array("$ccode &#149; Skeleton warrior`7 (%s)`0", 1),
           $script."op=fight&skill=$spec&l=1", true);
       } else {
         addnav(array("$ccode &#149; Skeleton Crew`7 (%s)`0", 1),
@@ -163,15 +163,15 @@ function specialtydarkarts_dohook($hookname,$args){
           $script."op=fight&skill=$spec&l=2",true);
     }
     if ($uses > 2) {
-      addnav(array("$ccode &#149; Leben absaugen`7 (%s)`0", 3),
+      addnav(array("$ccode &#149; Drain life`7 (%s)`0", 3),
           $script."op=fight&skill=$spec&l=3",true);
     }
     if ($uses > 3) {
-      addnav(array("$ccode &#149; Dunkler Pakt`7 (%s)`0", 4),
+      addnav(array("$ccode &#149; Dark Pact`7 (%s)`0", 4),
           $script."op=fight&skill=$spec&l=4",true);
     }
     if ($uses > 4) {
-      addnav(array("$ccode &#149; Seelenqual`7 (%s)`0", 5),
+      addnav(array("$ccode &#149; Mental Agony`7 (%s)`0", 5),
           $script."op=fight&skill=$spec&l=5",true);
     }
     break;
@@ -184,12 +184,12 @@ function specialtydarkarts_dohook($hookname,$args){
         case 1:
           if (getsetting("enablecompanions", true)) {
             apply_companion('skeleton_warrior', array(
-              "name"=>translate_inline("`4Skelettkrieger"),
+              "name"=>translate_inline("`4Skeleton warrior"),
               "hitpoints"=>round($session['user']['level']*(3+$session['user']['dragonkills']/10))+10,
               "maxhitpoints"=>round($session['user']['level']*(3+$session['user']['dragonkills']/10))+10,
               "attack"=>round((($session['user']['level']/4)+2))*round((($session['user']['level']/3)+2))+floor($session['user']['dragonkills']/5),
               "defense"=>ceil((($session['user']['level']/3)+0))*ceil(($session['user']['level']/6)+2)+floor($session['user']['dragonkills']/6),
-              "dyingtext"=>"`\$Dein Skelettkrieger zerf�llt zu Staub.`n",
+              "dyingtext"=>"`\$Your skeleton warrior turns to dust.`n",
               "abilities"=>array(
                 "fight"=>true,
               ),
@@ -214,8 +214,8 @@ function specialtydarkarts_dohook($hookname,$args){
           break;
         case 2:
           apply_buff('da2',array(
-            "startmsg"=>"`\$Du ziehst eine kleine Puppe hervor, die wie {badguy}`\$ aussieht.",
-            "effectmsg"=>"`)Du stichst mit einer Nadel in die {badguy}-Puppe und richtest damit `\${damage}`) Schadenspunkte an!!",
+            "startmsg"=>"`\$You pull out a little `\$doll that looks like {badguy}.",
+            "effectmsg"=>"`)You pierce the {badguy} doll with a needle, dealing `\${damage}`) points of damage!!",
             "rounds"=>1,
             "minioncount"=>1,
             "maxbadguydamage"=>(15+$session['user']['level']+round($session['user']['dragonkills']/2))*6,
@@ -225,18 +225,18 @@ function specialtydarkarts_dohook($hookname,$args){
           break;
         case 3:
           apply_buff('da3', array(
-            "startmsg"=>"`\$Deine Waffe gl�ht in einem �berirdischen Licht.",
-            "name"=>"`\$Leben absaugen",
+            "startmsg"=>"`\$Your weapon glows with an unearthly light.",
+            "name"=>"`\$Drain life",
             "rounds"=>5*ceil($session['user']['level']/7),
-            "wearoff"=>"`)Die Aura deiner Waffe verblasst.",
+            "wearoff"=>"`)Your weapon's aura fades.",
             "lifetap"=>0.33, //ratio of damage healed to damage dealt
-            "effectfailmsg"=>"`)Deine Waffe heult auf, als du keinen Schaden bei deinem Gegner anrichtest.",
+            "effectfailmsg"=>"`)Your weapon wails as you do no damage to your opponent.",
             "schema"=>"module-specialtydarkarts"
           ));
           apply_buff('da3b',array(
             "rounds"=>5*ceil($session['user']['level']/7),
             "damageshield"=>-0.33,
-            "effectmsg"=>"`)Du entziehst {badguy} `\${damage}`) weitere Lebenspunkte.",
+            "effectmsg"=>"`)You drain `\${damage}`) health points from {badguy}.",
             "schema"=>"module-specialtydarkarts"
           ));
           break;
@@ -244,27 +244,27 @@ function specialtydarkarts_dohook($hookname,$args){
           $sac = min(round($session['user']['maxhitpoints']/5),$session['user']['hitpoints']-1);
           $session['user']['hitpoints']-=$sac;
           apply_buff('da4',array(
-            "startmsg"=>"`\$Du opferst einen Teil deiner Lebenskraft, um deine Macht kurzzeitig zu vergr��ern.",
-            "name"=>"`\$Woge der Macht",
+            "startmsg"=>"`\$You sacrifice part of your life force to temporarily increase your power.",
+            "name"=>"`\$Wave of power",
             "rounds"=>3,
-            "wearoff"=>"`)Die Woge der Macht versiegt wieder.",
+            "wearoff"=>"`)The wave of power dries up again.",
             "atkmod"=>2,
             "defmod"=>2,
-            "roundmsg"=>"`)Mit unnat�rlicher St�rke st�rzt du dich auf {badguy}.",
+            "roundmsg"=>"`)You pounce on {badguy} with unnatural strength.",
             "schema"=>"module-specialtydarkarts"
           ));
-          break;          
+          break;
         case 5:
           $sac = min(round($session['user']['maxhitpoints']/5),$session['user']['hitpoints']-1);
           $session['user']['hitpoints']-=$sac;
           apply_buff('da5',array(
-            "startmsg"=>"`\$Mit einer d�nnen Klinge schneidest du in deine Hand, besudelst {badguy}`\$ mit deinem Blut und murmelst einige d�stere Worte.",
-            "name"=>"`\$Seelenqual",
+            "startmsg"=>"`\$You cut your hand with a thin blade, staining {badguy}`\$ with your blood and muttering some dark words.",
+            "name"=>"`\$Mental Agony",
             "rounds"=>5,
-            "wearoff"=>"`)Die Seele deines Gegners erholt sich.",
+            "wearoff"=>"`)Your opponent's soul recovers.",
             "badguyatkmod"=>0,
             "badguydefmod"=>0,
-            "roundmsg"=>"`){badguy}`) windet sich in schrecklichen Qualen jenseits des K�rperlichen und ist deinen Attacken hilflos ausgeliefert!",
+            "roundmsg"=>"`){badguy}`) writhes in terrible agony beyond the physical, helpless to your attacks!",
             "schema"=>"module-specialtydarkarts"
           ));
           break;

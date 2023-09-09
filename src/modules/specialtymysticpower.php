@@ -152,23 +152,23 @@ function specialtymysticpower_dohook($hookname,$args){
           $script."op=fight&skill=$spec&l=1", true);
     }
     if ($uses > 1) {
-      addnav(array("$ccode2 &#149; Erdenfaust`7 (%s)`0", 2),
+      addnav(array("$ccode2 &#149; Earth punch`7 (%s)`0", 2),
           $script."op=fight&skill=$spec&l=2",true);
     }
     if ($uses > 2) {
-      addnav(array("$ccode2 &#149; Steinhaut`7 (%s)`0", 3),
+      addnav(array("$ccode2 &#149; Stoneskin`7 (%s)`0", 3),
           $script."op=fight&skill=$spec&l=3",true);
     }
     if ($uses > 3) {
-      addnav(array("v?$ccode2 &#149; Verschwimmen`7 (%s)`0", 4),
+      addnav(array("v?$ccode2 &#149; Blur`7 (%s)`0", 4),
       $script."op=fight&skill=$spec&l=4",true);
     }
     if ($uses > 4) {
-      addnav(array("d?$ccode2 &#149; Donnerknall`7 (%s)`0", 5),
+      addnav(array("d?$ccode2 &#149; Thunderclap`7 (%s)`0", 5),
           $script."op=fight&skill=$spec&l=5",true);
     }
     if ($uses > 9) {
-      addnav(array("$ccode2 &#149; Zeitstopp`7 (%s)`0", 10),
+      addnav(array("$ccode2 &#149; Time stop`7 (%s)`0", 10),
           $script."op=fight&skill=$spec&l=10",true);
     }
     break;
@@ -180,26 +180,26 @@ function specialtymysticpower_dohook($hookname,$args){
         switch($l){
         case 1:
           apply_buff('mp1', array(
-            "startmsg"=>"`^Du f�ngst an zu regenerieren!",
+            "startmsg"=>"`^You start to regenerate!",
             "name"=>"`%Regeneration",
             "rounds"=>5+$session['user']['level'],
-            "wearoff"=>"`5Die Regeneration klingt ab.",
+            "wearoff"=>"`5The regeneration stops.",
             "regen"=>2*$session['user']['level']+round($session['user']['dragonkills']/3),
-            "effectmsg"=>"`%Du regenerierst `^{damage}`% Lebenspunkte.",
-            "effectnodmgmsg"=>"Du hast keine Wunden zu regenerieren.",
+            "effectmsg"=>"`%You regenerate `^{damage}`% health points.",
+            "effectnodmgmsg"=>"You have no wounds to regenerate.",
             "aura"=>true,
-            "auramsg"=>"`5Dein {companion}`5 regeneriert ebenfalls `^{damage} Lebenspunkte`5 aufgrund deiner heilenden Aura.",
+            "auramsg"=>"`5Your {companion}`5 also regenerates `^{damage} health`5 due to your healing aura.",
             "schema"=>"module-specialtymysticpower"
           ));
           break;
         case 2:
           apply_buff('mp2', array(
-            "startmsg"=>"`^Die Erde in deiner Umgebung beginnt zu erzittern.",
-            "name"=>"`%Erdenfaust",
+            "startmsg"=>"`^The earth around you begins to shake.",
+            "name"=>"`%Earth punch",
             "rounds"=>5,
-            "wearoff"=>"`5Die Erde wird wieder ruhig.",
+            "wearoff"=>"`5The earth becomes calm again.",
             "minioncount"=>1,
-            "effectmsg"=>"`%Ein Brocken aufgeworfener Erde richtet `^{damage}`% Schadenspunkte bei {badguy}`% an.",
+            "effectmsg"=>"`%A chunk of earth deals `^{damage}`% damage to {badguy}`%.",
             "minbadguydamage"=>round(20+$session['user']['dragonkills']/4),
             "maxbadguydamage"=>ceil((20+$session['user']['dragonkills']/2)*(1+$session['user']['level']/10)),
             "areadamage"=>true,
@@ -208,46 +208,46 @@ function specialtymysticpower_dohook($hookname,$args){
           break;
         case 3:
           apply_buff('mp3', array(
-            "startmsg"=>"`^Deine Haut wird so hart wie Stein.",
-            "name"=>"`%Steinhaut",
+            "startmsg"=>"`^Your skin becomes as hard as rock.",
+            "name"=>"`%Stoneskin",
             "rounds"=>5*ceil($session['user']['level']/7),
-            "wearoff"=>"`5Deine Haut ist wieder so weich wie zuvor.",
+            "wearoff"=>"`5Your skin is as soft as before.",
             "badguydmgmod"=>0.5,
-            "roundmsg"=>"`%Die Treffer deiner Gegner dringen nur mit halber Kraft durch deine steinerne Haut.",
+            "roundmsg"=>"`%Your opponents' hits only penetrate your stone skin with half their strength.",
             "schema"=>"module-specialtymysticpower"
           ));
           break;
         case 4:
           apply_buff('mp4', array(
-            "startmsg"=>"`^Die Umrisse deines K�rpers verschwimmen und verwirren die Sinne deiner Feinde.",
-            "name"=>"`%Verschwimmen",
+            "startmsg"=>"`^The outlines of your body blur and confuse the senses of your enemies.",
+            "name"=>"`%Blur",
             "rounds"=>round(2*$session['user']['level']/3),
-            "wearoff"=>"`5Dein Koerper nimmt wieder klare Konturen an.",
+            "wearoff"=>"`5Your body takes on clear contours again.",
             "atkmod"=>1.25,
             "defmod"=>1.5,
-            "roundmsg"=>"`%{badguy}`% kann nicht erkennen wo du bist und schl�gt verzweifelt um sich.",
+            "roundmsg"=>"`%{badguy}`% can't see where you are and is flailing around desperately.",
             "schema"=>"module-specialtymysticpower"
           ));
           break;
         case 5:
           apply_buff('mp5b', array(
-            "startmsg"=>"`^Ein breiter Blitzstrahl f�hrt aus dem Himmel herab und schl�gt mit lautem Krachen auf dem Schlachtfeld ein.",
-            "name"=>"`%Donnerknall",
+            "startmsg"=>"`^A broad beam of lightning descends from the sky and hits the battlefield with a loud crack.",
+            "name"=>"`%Thunderclap",
             "rounds"=>1,
             "minioncount"=>1,
-            "effectmsg"=>"`%{badguy} wird von der Wucht des Einschlags getroffen und erleidet `^{damage}`% Schadenspunkte.",
+            "effectmsg"=>"`%{badguy} is hit by the force of the impact and takes `^{damage}`% points of damage.",
             "minbadguydamage"=>round(16+$session['user']['dragonkills']/2)*8,
             "maxbadguydamage"=>ceil(20+$session['user']['dragonkills']/2)*max(1,$session['user']['level']/10)*10,
             "areadamage"=>true,
             "schema"=>"module-specialtymysticpower"
           ));
           apply_buff('mp5', array(
-            "name"=>"`%Blitzaura",
+            "name"=>"`%Lightning aura",
             "rounds"=>ceil($session['user']['level']/2),
-            "wearoff"=>"Deine Haut hoert auf zu kribbeln.",
+            "wearoff"=>"Your skin stops tingling.",
             "damageshield"=>2,
-            "roundmsg"=>"`%Deine Haut kribbelt noch vor elektrischer Energie.",
-            "effectmsg"=>"`%{badguy}$ccode wird von einer Entladung aus deiner Haut zur�ckgeschleudert und erleidet `^{damage}$ccode Schadenspunkte!",
+            "roundmsg"=>"`%Your skin still tingles with electrical energy.",
+            "effectmsg"=>"`%{badguy}$ccode is thrown back by a discharge from your skin and takes `^{damage}$ccode points of damage!",
             "schema"=>"module-specialtymysticpower"
           ));
           break;
@@ -256,28 +256,28 @@ function specialtymysticpower_dohook($hookname,$args){
             $session['user']['gems']--;
             apply_buff('mp10'
               ,array(
-                "startmsg"=>"`%Du z�ckst einen Edelstein und b�ndelst deine Macht durch ihn, um sie gegen den Lauf der Welt selbst zu richten. Der Edelstein zerbirst und die Zeit bleibt stehen!",
-                "name"=>"`%Zeitstopp",
+                "startmsg"=>"`%You pull out a gemstone and concentrate your power through it in order to direct it against the course of the world itself. The gem shatters and time stops!",
+                "name"=>"`%Time stop",
                 "rounds"=>10,
-                "wearoff"=>"`%Deine Kraft ist aufgebraucht und die Welt dreht sich weiter.",
+                "wearoff"=>"`%Your strength is used up and the world keeps turning.",
                 "badguyatkmod"=>0,
                 "badguydefmod"=>0,
-                "roundmsg"=>"Du hast alle Zeit der Welt um dich um deinen Gegner zuk�mmern.",
+                "roundmsg"=>"You have all the time in the world to deal with your opponent.",
                 "schema"=>"module-specialtymysticpower"
               )
             );
           }else{
             apply_buff('mp10f'
               ,array(
-                "startmsg"=>"`%Da du keinen Edelstein zur Hand hast, versuchst du, den Lauf der Zeit ohne einen solchen Fokus zu bremsen. Leider verlangsamt sich dadurch nicht nur dein Gegner, sondern auch du selbst!",
-                "name"=>"`%Zeitlupe",
+                "startmsg"=>"`%Since you don't have a gem on hand, you try to slow the passage of time without such a focus. Unfortunately, this not only slows down your opponent, but also you!",
+                "name"=>"`%Slow motion",
                 "rounds"=>10,
-                "wearoff"=>"`%Endlich dreht sich die Welt wieder schneller.",
+                "wearoff"=>"`%The world is finally turning faster again.",
                 "badguyatkmod"=>0.5,
                 "badguydefmod"=>0.5,
                 "atkmod"=>0.5,
                 "defmod"=>0.5,
-                "roundmsg"=>"`%Du und {badguy} bewegen sich wie in Zeitlupe aufeinander zu. Das wird ein langer Kampf werden...",
+                "roundmsg"=>"`%You and {badguy} move towards each other as if in slow motion. This is going to be a long fight...",
                 "schema"=>"module-specialtymysticpower"
               )
             );
