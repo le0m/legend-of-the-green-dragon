@@ -342,7 +342,7 @@ function get_all_tables(){
 				'name'=>'acctid', 'type'=>'int(11) unsigned'
 			),
 			'output'=>array(
-				'name'=>'output', 'type'=>'mediumtext'
+				'name'=>'output', 'type'=>'longtext'
 			),
 			'newdaytext'=>array(
 				'name'=>'newdaytext', 'type'=>'mediumtext', 'null'=>'1'

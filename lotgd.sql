@@ -136,7 +136,7 @@ DROP TABLE IF EXISTS `accounts_output`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `accounts_output` (
   `acctid` int(11) unsigned NOT NULL,
-  `output` mediumtext NOT NULL,
+  `output` longtext NOT NULL,
   PRIMARY KEY (`acctid`)
 );
 /*!40101 SET character_set_client = @saved_cs_client */;

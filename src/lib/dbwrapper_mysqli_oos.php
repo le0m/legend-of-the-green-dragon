@@ -11,7 +11,7 @@ function db_query($sql, $die=true){
 		$dbinfo['querytime'] = 0;
 	}
 
-	$mysqli_resource->set_charset("latin1");
+	$mysqli_resource->set_charset("utf8mb4");
 	// $fname = DBTYPE."_query";
 	$starttime = getmicrotime();
 	//$r = $fname($sql);
