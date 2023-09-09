@@ -210,7 +210,7 @@ if (getsetting("allowcreation",1)==0){
 						$args = httpallpost();
 						$args['acctid'] = $row['acctid'];
 						//insert output
-						$sql_output = "INSERT INTO " . db_prefix("accounts_output") . " VALUES ({$row['acctid']},'');";
+						$sql_output = "INSERT INTO " . db_prefix("accounts_output") . " VALUES ({$row['acctid']},'', null);";
 						db_query($sql_output);
 						//end
 						modulehook("process-create", $args);
