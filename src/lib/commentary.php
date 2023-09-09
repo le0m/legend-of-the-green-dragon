@@ -753,7 +753,7 @@ function talkform($section,$talkline,$limit=20,$schema=false){
 
 		rawoutput("<select name='colorselect' id='colorselect' onchange=\"selectColor(this, 'inputinsertcommentary');\">");
 		foreach($colors as $key=>$val) {
-			rawoutput('<option value=' . $key . ' style="background: ' . $val['hex'] . '">' . $key . ' Beispiel</option>');
+			rawoutput('<option value=' . $key . ' style="background: ' . $val['hex'] . '">' . $key . ' Example</option>');
 		}
 		rawoutput("</select>");
 
