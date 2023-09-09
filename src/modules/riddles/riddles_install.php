@@ -15,7 +15,7 @@
 #--
 
 $sql = array(
-	"CREATE TABLE ".db_prefix("riddles")." (id int(11) NOT NULL auto_increment, riddle mediumtext NOT NULL, answer tinytext NOT NULL, author varchar(255) NOT NULL DEFAULT 'System', PRIMARY KEY  (id)) TYPE=InnoDB;",
+	"CREATE TABLE ".db_prefix("riddles")." (id int(11) NOT NULL auto_increment, riddle mediumtext NOT NULL, answer tinytext NOT NULL, author varchar(255) NOT NULL DEFAULT 'System', PRIMARY KEY  (id));",
 #--
 #-- Dumping data for table '".db_prefix("riddles")."'
 #--

@@ -21,7 +21,7 @@ function drinks_install_private(){
 				hppercent int(11) NOT NULL default '0',
 				turnmin int(11) NOT NULL default '0',
 				turnmax int(11) NOT NULL default '0',
-				remarks text NOT NULL DEFAULT '',
+				remarks text NOT NULL,
 				buffname varchar(50) NOT NULL default '',
 				buffrounds tinyint(4) NOT NULL default '0',
 				buffroundmsg varchar(75) NOT NULL default '',
