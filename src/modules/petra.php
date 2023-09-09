@@ -229,9 +229,9 @@ function petra_dohook($hookname,$args){
 			$mult = 0;
 			if ($lasttat > $maxtime*.95) {
 				$mult = 0.7;
-			} elseif ($lasttat > $maxttime*.8) {
+			} elseif ($lasttat > $maxtime*.8) {
 				$mult = 0.8;
-			} elseif ($lasttime > $maxtime*.7) {
+			} elseif ($lasttat > $maxtime*.7) {
 				$mult = 0.9;
 			} elseif ($lasttat > $maxtime*.66) {
 				$mult = 0.95;
