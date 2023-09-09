@@ -77,7 +77,7 @@ function oldhouse_scare(){
 		$sql = "SELECT a.name FROM " . db_prefix("accounts") . " AS a, " . db_prefix("module_userprefs") . " AS m WHERE m.modulename = 'stafflist' AND m.setting = 'rank' AND m.value > 0 AND m.userid = a.acctid ORDER by rand(".e_rand().") LIMIT 1";
 		$result=db_query($sql);
 		$row = db_fetch_assoc($result);
-		$person = $row['name'];
+		$person = $row['name'] ?? '';
 	}
 	// Talk will be empty if we don't have a stafflist or if noone is set
 	// as staff
@@ -154,7 +154,6 @@ function oldhouse_scare(){
 			set_module_pref("scaretoday",1,"oldhouse");
 		break;
 	}
-	return $args;
 }
 
 function oldhouse_run() {

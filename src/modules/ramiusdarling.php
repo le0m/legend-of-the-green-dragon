@@ -33,15 +33,15 @@ function ramiusdarling_dohook($hookname,$args){
 	switch($hookname){
 	case "rock":
 	case "shades":
-			
+
 		$superusermask = SU_HIDE_FROM_LEADERBOARD;
 		$standardwhere = "(locked=0 AND (superuser & $superusermask) = 0)";
 		$sql = "SELECT resurrections, name FROM ".db_prefix("accounts")." WHERE $standardwhere ORDER BY resurrections DESC LIMIT 1";
 		debug($sql);
 		$row = db_fetch_assoc(db_query($sql));
-		output("`4Auf einem Grabstein steht eingraviert:`n");
-		output("`\$Als suizidgef�hrdetster Krieger, hat sich `^%s`\$ den Titel `)\"Ramius Liebling\" `\$f�r `^%s`\$ Auferstehungen erarbeitet`n`n", $row['name'], $row['resurrections']);
-		
+		output("`4Engraved on a tombstone is:`n");
+		output("`\$As the most suicidal warrior, `^%s`\$ has earned the title `)\"Ramius' Darling\" `\$for `^%s`\$ resurrections`n`n", $row['name'], $row['resurrections']);
+
 		break;
 	}
 	return $args;
