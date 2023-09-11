@@ -211,9 +211,9 @@ if (db_num_rows($result) > 0 && $session['user']['level'] <= 14){
 			if (getsetting("companionslevelup", 1) == true) {
 				$newcompanions = $companions;
 				foreach ($companions as $name => $companion) {
-					$companion['attack'] = $companion['attack'] + $companion['attackperlevel'];
-					$companion['defense'] = $companion['defense'] + $companion['defenseperlevel'];
-					$companion['maxhitpoints'] = $companion['maxhitpoints'] + $companion['maxhitpointsperlevel'];
+					$companion['attack'] = $companion['attack'] + $companion['attackperlevel'] ?? 0;
+					$companion['defense'] = $companion['defense'] + $companion['defenseperlevel'] ?? 0;
+					$companion['maxhitpoints'] = $companion['maxhitpoints'] + $companion['maxhitpointsperlevel'] ?? 0;
 					$companion['hitpoints'] = $companion['maxhitpoints'];
 					$newcompanions[$name] = $companion;
 				}

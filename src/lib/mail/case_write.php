@@ -118,7 +118,7 @@ foreach($superusers as $val) {
 rawoutput("</script>");
 output("`2Subject:");
 require_once('lib/forms.php');
-previewfield("subject", false, false, false, false, true, htmlentities($subject).htmlentities(stripslashes(httpget('subject')), ENT_COMPAT, getsetting("charset", "ISO-8859-1")),true,true);
+previewfield("subject", false, false, false, false, true, htmlentities($subject).htmlentities(stripslashes(httpget('subject')), ENT_COMPAT, getsetting("charset", "ISO-8859-1")));
 
 //rawoutput("<input name='subject' value=\"".htmlentities($subject).htmlentities(stripslashes(httpget('subject')), ENT_COMPAT, getsetting("charset", "ISO-8859-1"))."\"><br>");
 rawoutput("<div id='warning' style='visibility: hidden; display: none;'>");

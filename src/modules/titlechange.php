@@ -43,14 +43,14 @@ function titlechange_dohook($hookname,$args){
 		output($format, $str, true);
 		break;
 	case "lodge":
-		addnav("Mein Charakter");
+		addnav("My character");
 		// If they have less than what they need just ignore them
 		$times = get_module_pref("timespurchased");
 		if (get_module_setting("initialpoints") > $session['user']['donation'] || get_module_setting("extrapoints") > ($session['user']['donation'] - $session['user']['donationspent'])) {
 			addnav(array("Set Custom Title (%s Donationpoints)", get_module_setting("extrapoints")), "");
 			break;
 		}
-		addnav(array("Set Custom Title (%s Donationpoints)`n`\$Achtung:`0Du brauchst hierf�r mindestens %s Donationpoints!", get_module_setting("extrapoints"), get_module_setting("initialpoints")),"runmodule.php?module=titlechange&op=titlechange");
+		addnav(array("Set Custom Title (%s Donationpoints)`n`\$Attention:`0you need at least %s donation points for this!", get_module_setting("extrapoints"), get_module_setting("initialpoints")),"runmodule.php?module=titlechange&op=titlechange");
 		break;
 	}
 	return $args;

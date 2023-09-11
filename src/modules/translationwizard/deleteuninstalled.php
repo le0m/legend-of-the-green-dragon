@@ -4,20 +4,20 @@ switch ($what) {
 
 	case "delete":
 		$modules=unserialize(stripslashes(rawurldecode(httpget('delmodule'))));
-		while (list($key,$modulename)=each($modules)){
+        foreach ($modules as $key => $modulename) {
 			$sql="DELETE FROM ".db_prefix('translations')." WHERE uri='module-".$modulename."';";
 			$result=db_query($sql); //debug($sql);
 			output("Translations for module `^%s`0 deleted from db`n",$modulename);
-		}		
+		}
 		break;
-		
+
 	default:
 		$post=httppost('module');
 		if ($post=="") $post=httpget('module');
 		if (!is_array($post)) $post=array($post);
 		output("You just deinstalled:");
 		output_notl("`n`n");
-		while (list($key,$modulename)=each($post)){
+        foreach ($post as $key => $modulename) {
 			output("Module: `^%s`0`n",$modulename);
 		}
 		output_notl("`n`n");
@@ -42,7 +42,7 @@ switch ($what) {
 					document.write('<html><head>');
 					document.write('<title>".translate_inline("Translation Wizard")."</title>');
 					document.write('</head>');
-					document.write('<body leftmargin=\"0\" marginheight=\"0\" marginwidth=\"0\" topmargin=\"0\">');				
+					document.write('<body leftmargin=\"0\" marginheight=\"0\" marginwidth=\"0\" topmargin=\"0\">');
 					document.write('".translate_inline("Do you want to proceed and delete translations for this/these modules you selected?")."');
 					document.write('<a href=runmodule.php?module=translationwizard&op=delete_popup&mode=continue&get=$get&post=$post>".translate_inline("Continue")."</a>');
 					document.write('</body></html>');

@@ -1,6 +1,6 @@
 <?php
 $alrighty=true;
-while (list($key,$trans)=each($transintext)) {
+foreach ($transintext as $key => $trans) {
 	if ($transouttext[$key]<>"")
 		{
 		$intext = $trans; //this comes in from the textarea and mustn't be decoded
@@ -23,5 +23,5 @@ while (list($key,$trans)=each($transintext)) {
 }
 if (!$alrighty) $error=4;
 	else $error=5;
-if ($redirectonline) redirect("runmodule.php?module=translationwizard&op=list&ns=".$namespace."&error=".$error); //just redirecting 
+if ($redirectonline) redirect("runmodule.php?module=translationwizard&op=list&ns=".$namespace."&error=".$error); //just redirecting
 ?>

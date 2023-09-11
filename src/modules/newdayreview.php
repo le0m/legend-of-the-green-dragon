@@ -29,8 +29,8 @@ function newdayreview_dohook($hookname,$args){
 	switch($hookname){
         case "footer-prefs":
             // case "lodge":
-            addnav("Mein Charakter");
-            addnav("Letzter Newday", "runmodule.php?module=newdayreview",false,true);
+            addnav("My character");
+            addnav("Last Newday", "runmodule.php?module=newdayreview",false,true);
 			break;
 	}
 	return $args;
@@ -38,11 +38,11 @@ function newdayreview_dohook($hookname,$args){
 
 function newdayreview_run(){
 	global $session;
-	popup_header("Mein letzter Newday");
+	popup_header("My last Newday");
 	$sql = "SELECT newdaytext FROM ".db_prefix("accounts_output")." WHERE acctid={$session['user']['acctid']}";
 	$result = db_query($sql);
 	$row=db_fetch_assoc($result);
-	
+
 	global $block_new_output;
 	$temp = $block_new_output;
 	set_block_new_output(false);

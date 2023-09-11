@@ -53,7 +53,7 @@ function stocks_dohook($hookname, $args) {
 				$sql = "SELECT name FROM " . db_prefix("accounts") . " WHERE acctid='$stocks'";
 				$result = db_query_cached($sql, "stocks");
 				$row = db_fetch_assoc($result);
-				output("`n`^You head over to examine the stocks, and out of compassion, you help %s`^ out of the stocks.  ",$row['name']);
+				output("`n`^You head over to examine the stocks, and out of compassion, you help %s`^ out of the stocks.  ",$row['name'] ?? '');
 				output("Wondering how they got in there in the first place, you place your own head and hands in them when SNAP, they clap shut, trapping you inside! `0`n");
 				modulehook("stocksenter");
 			}

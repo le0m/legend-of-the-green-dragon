@@ -83,10 +83,9 @@ function db_error(){
 function db_fetch_assoc(&$result){
 	if (is_array($result)){
 		//cached data
-		if (list($key,$val)=each($result))
-			return $val;
-		else
-			return false;
+        $val = current($result);
+        next($result);
+		return $val;
 	}else{
 		$r = mysqli_fetch_assoc($result);
 		return $r;

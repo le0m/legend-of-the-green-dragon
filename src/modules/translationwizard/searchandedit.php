@@ -45,7 +45,7 @@ case "select":
 		break;
 		case 1:
 		$sql.="ORDER BY language $orderbyascdesc LIMIT ";
-		break;		
+		break;
 		case 2:
 		$sql.="ORDER BY uri $orderbyascdesc LIMIT ";
 		break;
@@ -54,7 +54,7 @@ case "select":
 		break;
 		case 4:
 		$sql.="ORDER BY outtext $orderbyascdesc LIMIT ";
-		break;		
+		break;
 		case 5:
 		$sql.="ORDER BY author $orderbyascdesc LIMIT ";
 		break;
@@ -90,7 +90,7 @@ case "select":
 		}
 	rawoutput("</h4>");
 	rawoutput("<table border='0' cellpadding='2' cellspacing='0'>");
-	rawoutput("<tr class='trhead'><td></td><td>". translate_inline("Tid") ."</td><td>". translate_inline("Language")."</td><td>".translate_inline("Namespace")."</td><td>".translate_inline("Intext")."</td><td>".translate_inline("Outtext")."</td><td>".translate_inline("Author")."</td><td>".translate_inline("Version")."</td><td>".translate_inline("Actions")."</td><td></td></tr>");	
+	rawoutput("<tr class='trhead'><td></td><td>". translate_inline("Tid") ."</td><td>". translate_inline("Language")."</td><td>".translate_inline("Namespace")."</td><td>".translate_inline("Intext")."</td><td>".translate_inline("Outtext")."</td><td>".translate_inline("Author")."</td><td>".translate_inline("Version")."</td><td>".translate_inline("Actions")."</td><td></td></tr>");
 	$i=0;
 	while($row=db_fetch_assoc($result))
 		{
@@ -102,7 +102,7 @@ case "select":
 		rawoutput("</td><td>");
 		rawoutput($row['language']);
 		rawoutput("</td><td>");
-		rawoutput($row['uri']);		
+		rawoutput($row['uri']);
 		rawoutput("</td><td>");
 		rawoutput(htmlentities(stripslashes($row['intext']),ENT_COMPAT,$coding));
 		rawoutput("</td><td>");
@@ -113,7 +113,7 @@ case "select":
 		rawoutput($row['version']);
 		rawoutput("</td><td>");
 		rawoutput("<a href='runmodule.php?module=translationwizard&op=searchandedit&mode=edit&tid=".$row['tid']."'>". translate_inline("Edit")."</a>");
-		addnav("", "runmodule.php?module=translationwizard&op=searchandedit&mode=edit&tid=".$row['tid']);	
+		addnav("", "runmodule.php?module=translationwizard&op=searchandedit&mode=edit&tid=".$row['tid']);
 		rawoutput("</td><td>");
 		rawoutput("<a href='runmodule.php?module=translationwizard&op=searchandedit&mode=delete&tid=".$row['tid']."'>". translate_inline("Delete")."</a>");
 		addnav("", "runmodule.php?module=translationwizard&op=searchandedit&mode=delete&tid=".$row['tid']);
@@ -141,17 +141,17 @@ case "select":
 				}
 					//  End -->
 				</script>");
-	//end		
+	//end
 	if (db_num_rows($result)>1) rawoutput("<input type='button' onClick='this.value=check()' name='allcheck' value='". $all ."' class='button'>");
 	rawoutput("<input type='submit' name='deletechecked' value='". translate_inline("Delete selected") ."' class='button'>");
 	rawoutput("</form>");
 break;
 
 case "edit":
-	if (!httpget('tid')) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=3'); //back to the roots 
+	if (!httpget('tid')) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=3'); //back to the roots
 	$sql="SELECT * FROM ".db_prefix("translations")." WHERE tid=".httpget('tid').";";
 	$result=db_query($sql);
-	if (db_num_rows($result)>1) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=3'); //back to the roots 
+	if (db_num_rows($result)>1) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=3'); //back to the roots
 	$row=db_fetch_assoc($result);
 	output("Please edit the following row. If you hit save, all values will be saved.");
 	output_notl(" ");
@@ -175,7 +175,7 @@ case "edit":
 	output("Outtext of the row:");
 	output_notl("`n");
 	rawoutput("<textarea name='outtext' class='input' cols='60' rows='5'>".htmlentities(stripslashes($row['outtext']),ENT_COMPAT,$coding)."</textarea>");
-	output_notl("`n`n");	
+	output_notl("`n`n");
 	output("Author of the row:");
 	rawoutput("<input id='input' name='author' width=50 maxlength=50 value='".$row['author']."'>");
 	output_notl("`n`n");
@@ -185,7 +185,7 @@ case "edit":
 	rawoutput("<input type='submit' name='select' value='". translate_inline("Save")."' class='button'>");
 	output("`b`$ ATTENTION`b`0");
 	rawoutput("<input type='submit' name='abort' value='". translate_inline("Abort")."' class='button'>");
-	rawoutput("</form>");	
+	rawoutput("</form>");
 break;
 
 case "save":
@@ -193,9 +193,9 @@ case "save":
 	$sql="UPDATE ".db_prefix("translations")." set language='".httppost('language')."', uri='".httppost('uri')."', intext='".httppost('intext')."', outtext='".httppost('outtext')."', author='".httppost('author')."', version='".httppost('version')."' WHERE tid=".httppost('tid').";";
 	$result=db_query($sql);
 	debug($sql);
-	if (!result) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=4&mode=select'); //back to the roots 
+	if (!result) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=4&mode=select'); //back to the roots
 	redirect('runmodule.php?module=translationwizard&op=searchandedit&error=5&mode=select'); //back to the roots, no error but success
-	
+
 break;
 
 case "delete":
@@ -207,24 +207,24 @@ case "delete":
 		}else
 		{
 		if ($delrows) $deleterows = array($delrows);
-		else 
+		else
 			{
 			$deleterows = array();
 			}
 		}
-	while (list($key,$val)=each($deleterows))
+    foreach ($deleterows as $key => $val)
 		{
-		$earlyexit=true;		
+		$earlyexit=true;
 		$sql = "DELETE FROM " . db_prefix("translations") . " WHERE tid=".$val.";";
 		db_query($sql);
 		//debug($sql);
 		}
 	//debug($sql);debug("Early:".$earlyexit);debug("tidget:".httpget('tid'));
 	if ($earlyexit) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=7&mode=select'); //back to the roots, no error but success
-	if (!httpget('tid')) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=6&mode=select'); //back to the roots 
+	if (!httpget('tid')) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=6&mode=select'); //back to the roots
 	$sql="DELETE FROM ".db_prefix("translations")." WHERE tid=".httpget('tid').";";
 	$result=db_query($sql);
-	if (!result) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=6&mode=select'); //back to the roots 
+	if (!result) redirect('runmodule.php?module=translationwizard&op=searchandedit&error=6&mode=select'); //back to the roots
 	redirect('runmodule.php?module=translationwizard&op=searchandedit&error=7&mode=select'); //back to the roots, no error but success
 	break;
 
@@ -239,7 +239,7 @@ default:
 	output_notl("`n");
 	output("For those proficient with sql: The statement automatically has % at the end and the beginning of the word.");
 	output_notl(" ");
-	output("If you don't want that, just hit the checkbox below. You may use ?,% or the like in the text."); 
+	output("If you don't want that, just hit the checkbox below. You may use ?,% or the like in the text.");
 	output_notl("`n`n");
 	rawoutput("<form action='runmodule.php?module=translationwizard&op=searchandedit&mode=select' method='post'>");
 	addnav("", "runmodule.php?module=translationwizard&op=searchandedit&mode=select");
@@ -261,7 +261,7 @@ default:
 	rawoutput("</select>");
 	output_notl("`n`n");
 	output("Search exactly: ");
-	rawoutput("<input type='checkbox' name='exactly' ".($query['exactly']?"checked":"").">");	
+	rawoutput("<input type='checkbox' name='exactly' ".($query['exactly']?"checked":"").">");
 	output_notl("`n`n");
 	output("TID of the row:");
 	rawoutput("<input id='input' name='tid' width=5 maxlength=5 value='".$query['tid']."'>");
@@ -279,7 +279,7 @@ default:
 	output("Outtext of the row:");
 	output_notl("`n");
 	rawoutput("<textarea name='outtext' class='input' cols='60' rows='5'>".$query['outtext']."</textarea>");
-	output_notl("`n`n");	
+	output_notl("`n`n");
 	output("Author of the row:");
 	rawoutput("<input id='input' name='author' width=50 maxlength=50 value='".$query['author']."'>");
 	output_notl("`n`n");

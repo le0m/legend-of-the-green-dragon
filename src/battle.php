@@ -393,7 +393,7 @@ if ($op != "newtarget") {
 							$badguy['expgained']=true;
 						}
 					} else {
-						$options['experience'][$index] = $badguy['creatureexp'];
+						$options['experience'][$index] = $badguy['creatureexp'] ?? 0;
 					}
 				}else{
 					$alive++;

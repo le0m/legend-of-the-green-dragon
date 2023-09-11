@@ -116,9 +116,9 @@ function drinks_editor(){
 			//db_query($sql);
 			$post = httpallpost();
 			reset($post);
-			while(list($key, $val)=each($post)) {
-				set_module_objpref("drinks", $drinkid,$key, $val, $module);
-			}
+            foreach ($post as $key => $val) {
+                set_module_objpref("drinks", $drinkid,$key, $val, $module);
+            }
 			output("`^Saved.");
 		}
 		if ($drinkid) {

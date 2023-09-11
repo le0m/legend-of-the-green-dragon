@@ -6,28 +6,28 @@ switch (httpget('error')) {
 		break;
 	case 2:
 		output("`bNo row has been found! Select anew!`b");
-		output_notl("`n`n");			
+		output_notl("`n`n");
 		break;
 	case 3:
 		output("`bUnknown error, please report this!`b");
-		output_notl("`n`n");			
+		output_notl("`n`n");
 		break;
 	case 4:
 		output("`b`\$Save unsuccessful!`b`0");
-		output_notl("`n`n");			
-		break;		
+		output_notl("`n`n");
+		break;
 	case 5:
 		output("`b`\$Save successful!`b`0");
 		output_notl("`n`n");
 		break;
 	case 6:
 		output("`b`%Insert unsuccessful!`b`0");
-		output_notl("`n`n");			
-		break;		
+		output_notl("`n`n");
+		break;
 	case 7:
 		output("`bPlease enter something below!`b");
-		output_notl("`n`n");			
-		break;					
+		output_notl("`n`n");
+		break;
 }
 
 $trans = httppost("nametext");
@@ -38,8 +38,8 @@ if (is_array($trans))  //setting for any intexts you might receive
 	{
 	if ($trans) $nametext = array($trans);
 	else $nametext = array();
-	}	
-$trans = httppost("translatedtid");	
+	}
+$trans = httppost("translatedtid");
 if (is_array($trans))  //setting for any intexts you might receive
 	{
 	$translatedtid = $trans;
@@ -47,7 +47,7 @@ if (is_array($trans))  //setting for any intexts you might receive
 	{
 	if ($trans) $translatedtid = array($trans);
 	else $translatedtid = array();
-	}	
+	}
 switch($mode)
 {
 case "insert":
@@ -69,7 +69,7 @@ case "saveedited":
 	require("./modules/translationwizard/multichecked.php");//if you want to copy the checked translations with intext and the entered outtext, this commences the copy process
 	output("Job done");
 	break;
-	
+
 case "scan":
 require_once("./modules/translationwizard/scanvalidfiles.php");
 require_once("./modules/translationwizard/scanmodules_func.php");
@@ -84,7 +84,7 @@ if (!httpget('how')=='multi') {
 	$alternate=httppost('alternate');
 	if ($alternate) $ausgabe=wizard_scanfile($lookfor,false,$alternate);
 		else  $ausgabe=wizard_scanfile($lookfor,false);
-	
+
 } else {
 	$lookfor=httppost('lookfor');
 	$alternate=httppost('alternate');
@@ -92,13 +92,13 @@ if (!httpget('how')=='multi') {
 		$posi=strrpos($lookfor,"/");
 		$name=substr($lookfor,$posi+1,strlen($lookfor)-$posi-5);
 		if (!$posi) $name=substr($lookfor,0,strrpos($lookfor,"."));
-		if (strstr($lookfor,"modules")) $name="module-".$name;	
+		if (strstr($lookfor,"modules")) $name="module-".$name;
 		$alternate=$name; //secure, if no standard given, take the name of the main file
 	};
 	//$transintext = lib files etc
 	$ausgabe=wizard_scanfile($lookfor,false,$alternate); //main file
 	//now merge the libs with the alternate scheme to the main
-	while (list($key,$val)=each($transintext)) {
+	foreach ($transintext as $key => $val) {
 		$ausgabe=array_merge($ausgabe,wizard_scanfile($val,false,$alternate));
 	}
 }
@@ -107,12 +107,12 @@ addnav("", "runmodule.php?module=translationwizard&op=scanmodules&mode=insert");
 output("%s rows have been found.",sizeof($ausgabe));
 output_notl("`n`n");
 rawoutput("<table border='0' cellpadding='2' cellspacing='0'>");
-rawoutput("<tr class='trhead'><td></td><td>". translate_inline("Namespace") ."</td><td>". translate_inline("Intext")."</td><td>".translate_inline("Translated")."</td></tr>");	
+rawoutput("<tr class='trhead'><td></td><td>". translate_inline("Namespace") ."</td><td>". translate_inline("Intext")."</td><td>".translate_inline("Translated")."</td></tr>");
 //prepare sql
 $sql="SELECT tid,outtext FROM ".db_prefix("translations")." WHERE ";
 $wasthereanuntranslated=0;
 //end
-while (list($key,$row)=each($ausgabe))
+foreach ($ausgabe as $key => $row)
 {
 		$result=db_query($sql."intext='".addslashes($row['text'])."' AND language='".$languageschema."' AND uri='".$row['schema']."';");
 		if (db_num_rows($result)==0) {
@@ -151,13 +151,13 @@ while (list($key,$row)=each($ausgabe))
 	$all=translate_inline("Check all");
 	$none=translate_inline("Uncheck all");
 	$alltranslated=translate_inline("Check all Untranslated");
-	$nonetranslated=translate_inline("Uncheck all Untranslated");	
+	$nonetranslated=translate_inline("Uncheck all Untranslated");
 	rawoutput("<script type='text/javascript' language='JavaScript'>
 				<!-- Begin
 				var checkflag = 'false';
 				var checknoflag = 'false';
 				cb = document.forms['editfeld'].elements['inserttext[]'];
-				
+
 				function check() {
 					if (checkflag == 'false') {
 						for (i = 0; i < cb.length; i++) {
@@ -171,7 +171,7 @@ while (list($key,$row)=each($ausgabe))
 						return ' $all '; }
 				}
 
-				cba = document.forms['editfeld'].elements['translated[]'];				
+				cba = document.forms['editfeld'].elements['translated[]'];
 				function checkonlyno() {
 					if (checknoflag == 'false') {
 						for (i = 0; i < cb.length; i++) {
@@ -185,16 +185,16 @@ while (list($key,$row)=each($ausgabe))
 						}
 						checknoflag = 'false';
 						return ' $alltranslated '; }
-				}				
+				}
 					//  End -->
 				</script>");
-	//end		
+	//end
 	if (sizeof($ausgabe)>1) rawoutput("<input type='button' onClick='this.value=check()' name='allcheck' value='". $all ."' class='button'>");
-	if ($wasthereanuntranslated) rawoutput("<input type='button' onClick='this.value=checkonlyno()' name='transcheck' value='". $alltranslated ."' class='button'>");	
+	if ($wasthereanuntranslated) rawoutput("<input type='button' onClick='this.value=checkonlyno()' name='transcheck' value='". $alltranslated ."' class='button'>");
 	output_notl("`n");
 	if (sizeof($ausgabe)>0) rawoutput("<input type='submit' name='replacechecked' value='". translate_inline("Insert Selected into your untranslated table") ."' class='button'>");
 	if (sizeof($ausgabe)>0) rawoutput("<input type='submit' name='insertandeditchecked' value='". translate_inline("Translate Checked") ."' class='button'>");
-	rawoutput("</form>");	
+	rawoutput("</form>");
 	break;
 
 default:
@@ -235,9 +235,9 @@ output("`nChoose alternate scheme (valid for main file+libs, i.e. 'module-transl
 rawoutput("<input id='input' name='alternate' width=55>");
 output_notl("`n`n");
 rawoutput("<table border='0' cellpadding='2' cellspacing='0'>");
-rawoutput("<tr class='trhead'><td></td><td>".translate_inline("File")."</td></tr>");	
+rawoutput("<tr class='trhead'><td></td><td>".translate_inline("File")."</td></tr>");
 $two=wizard_showvalidfiles(false,2,false);
-while(list($key,$val)=each($two)) {
+foreach ($two as $key => $val) {
 	rawoutput("<tr class='".($key%2?"trlight":"trdark")."'><td>");
 	rawoutput("<input type='checkbox' name='transtext[]' value='$val' >");
 	rawoutput("</td><td>");
@@ -247,7 +247,7 @@ while(list($key,$val)=each($two)) {
 				var selectedentry = document.forms['secondscan'].elements['lookfor'].value;
 				selectedentry=selectedentry.substr(0,selectedentry.length-4);
 if (cbb[i].search(shortentry)!=-1) {cbb[i].checked=true;}
-	*/ 
+	*/
 	rawoutput("<script type='text/javascript' language='JavaScript'>
 				<!-- Begin
 				cbb = document.forms['secondscan'].elements['transtext[]'];
@@ -267,7 +267,7 @@ if (cbb[i].search(shortentry)!=-1) {cbb[i].checked=true;}
 				}
 					//  End -->
 				</script>");
-	//end	
+	//end
 rawoutput("</table></form>");
 /*rawoutput("<form action='runmodule.php?module=translationwizard&op=scanmodules&mode=scan' method='post'>");
 addnav("", "runmodule.php?module=translationwizard&op=scanmodules&mode=scan");

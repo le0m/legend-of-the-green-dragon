@@ -22,7 +22,7 @@ switch($mode) {
 		break;
 	}
 	$pullmodules_temp = httppost("moduletext");
-	if (is_array($pullmodules_temp)){ 
+	if (is_array($pullmodules_temp)){
 		//setting for any intexts you might receive
 		$pullmodules = $pullmodules_temp;
 	}else {
@@ -49,7 +49,7 @@ switch($mode) {
 		if (strstr($file[0],"Verified")) {
 			$moduledate=substr($file[0],0,10);
 			$file[0]="INSERT INTO ".db_prefix("temp_translations")." (`language`, `uri`, `intext`, `outtext`, `author`, `version`) VALUES ";
-			while(list($key,$vals) = each($file))
+			foreach ($file as $key => $vals)
 				{
 				$sql=$sql.$vals;
 				}
@@ -78,7 +78,7 @@ default:
 	output("Choose a mirror if you don't want to use the normal central DB:");
 	output_notl("`n");debug($mymirror);
 	rawoutput("<form action='runmodule.php?module=translationwizard&op=pull' name='listenauswahl' method='post'>");
-	addnav("", "runmodule.php?module=translationwizard&op=pull");	
+	addnav("", "runmodule.php?module=translationwizard&op=pull");
 	rawoutput("<select name='mirror' onchange='this.form.submit()'>");
 	rawoutput("<option value=''>---</option>");
 	foreach ($mirrors as $mirror) {
@@ -90,7 +90,7 @@ default:
 	if ($mymirror!='') {
 		output("`nCurrently you are using the mirror `\$%s`0.`n`n",$mymirror);
 	}
-	if (is_array($linklist)) sort ($linklist); 
+	if (is_array($linklist)) sort ($linklist);
 	output("Choose the directory (normally equals language) you want to pull from:");
 	output_notl("`n");
 	rawoutput("<select name='pulldir' onchange='this.form.submit()'>");
@@ -124,7 +124,7 @@ default:
 	if (httppost('datecheck'))
 		{
 		$listing2=$listing;
-		while (list($key,$val) = each($listing2))
+        foreach ($listing2 as $key => $val)
 			{
 			$file=pullurl($chosenpath.$val.".sql");
 			if (strstr($file[0],"Verified"))
@@ -153,7 +153,7 @@ default:
 	rawoutput("<input type='submit' name='pullchecked' value='". translate_inline("Pull checked") ."' class='button'>");
 	rawoutput("<table border='0' cellpadding='2' cellspacing='0'>");
 	rawoutput("<tr class='trhead'><td></td><td>". translate_inline("Namespace") ."</td><td>".translate_inline("Moduledate")."</td><td>".translate_inline("Last Pulled")."</td><td>".translate_inline("Server Date")."</td><td>".translate_inline("Actions")."</td><td></td><td></td></tr>");
-	while (list($key,$val) = each($listing))
+	foreach ($listing as $key => $val)
 		{
 		rawoutput("<tr class='".($i%2?"trlight":"trdark")."'><td>");
 		rawoutput("<input type='checkbox' name='moduletext[]' value='".rawurlencode($val)."' >");
