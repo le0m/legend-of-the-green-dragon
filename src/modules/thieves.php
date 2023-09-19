@@ -362,7 +362,7 @@ function thieves_fight($costlose) {
 			$badguyatt = $session['user']['attack'];
 			$badguydef = $session['user']['defense'];
 			if ($session['user']['level'] > 9) {
-				$baduyhp *= 1.05;
+				$badguyhp *= 1.05;
 			}
 			if ($session['user']['level'] < 4) {
 				$badguyhp *= .9;
@@ -440,7 +440,7 @@ function thieves_fight($costlose) {
 				}
 				require_once("lib/taunt.php");
 				$taunt = select_taunt_array();
-				addnews("`%%s`2 challenged `4Lonestrider `2and his band of thieves and put up a fierce fight! Unfortunately, `\$Lonestrider `2got the last blow in.`n%s",$session[user][name], $taunt);
+				addnews("`%%s`2 challenged `4Lonestrider `2and his band of thieves and put up a fierce fight! Unfortunately, `\$Lonestrider `2got the last blow in.`n%s",$session['user']['name'], $taunt);
 				$session['user']['specialmisc']="";
 				$session['user']['specialinc']="";
 			} else {
