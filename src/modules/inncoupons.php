@@ -54,7 +54,7 @@ function inncoupons_dohook($hookname,$args){
 		break;
 	case "innrooms":
 		$config = unserialize($session['user']['donationconfig']);
-		if (!is_array($config)) $config = array();
+		if (!is_array($config)) $config = array("innstays" => 0);
 		if ($config['innstays']) {
 			set_module_pref("availablestays", $config['innstays']);
 			unset($config['innstays']);

@@ -41,7 +41,7 @@ if ($pay){
 		output("He eyes you up and says, \"It will cost `\$%s`0 gold for the night in a standard room.", $expense);
 		$fee = getsetting("innfee", "5%");
 		if (strpos($fee, "%")) {
-			$bankexpense = $expense + round($expense * $fee / 100,0);
+			$bankexpense = $expense + round($expense * +str_replace("%", "", $fee) / 100,0);
 		} else {
 			$bankexpense = $expense + $fee;
 		}
