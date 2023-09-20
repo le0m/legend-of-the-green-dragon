@@ -34,12 +34,12 @@
 			$sql = "SELECT name FROM " . db_prefix("accounts") . " WHERE acctid={$claninfo['motdauthor']}";
 			$result = db_query($sql);
 			$row = db_fetch_assoc($result);
-			$motdauthname = $row['name'];
+			$motdauthname = $row['name'] ?? '';
 
 			$sql = "SELECT name FROM " . db_prefix("accounts") . " WHERE acctid={$claninfo['descauthor']}";
 			$result = db_query($sql);
 			$row = db_fetch_assoc($result);
-			$descauthname = $row['name'];
+			$descauthname = $row['name'] ?? '';
 
 			output("`&`bCurrent MoTD:`b `#by %s`2`n",$motdauthname);
 			output_notl(nltoappon($claninfo['clanmotd'])."`n");
