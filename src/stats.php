@@ -37,7 +37,7 @@ if ($op=="stats" || $op==""){
 	$name = translate_inline("Name");
 	$refs = translate_inline("Referrals");
 	rawoutput("<tr class='trhead'><td><b>$name</b></td><td><b>$refs</b></td></tr>");
-	$sql = "SELECT count(*) AS c, acct.acctid,acct.name AS referer FROM " . db_prefix("accounts") . " INNER JOIN " . db_prefix("accounts") . " AS acct ON acct.acctid = " . db_prefix("accounts") . ".referer WHERE " . db_prefix("accounts") . ".referer>0 GROUP BY " . db_prefix("accounts") . ".referer DESC ORDER BY c DESC";
+	$sql = "SELECT count(*) AS c, acct.acctid,acct.name AS referer FROM " . db_prefix("accounts") . " INNER JOIN " . db_prefix("accounts") . " AS acct ON acct.acctid = " . db_prefix("accounts") . ".referer WHERE " . db_prefix("accounts") . ".referer>0 GROUP BY " . db_prefix("accounts") . ".referer ORDER BY " . db_prefix("accounts") . ".referer DESC, c DESC";
 	$result = db_query($sql);
 	$number=db_num_rows($result);
 	for ($i=0;$i<$number;$i++){
@@ -58,7 +58,7 @@ if ($op=="stats" || $op==""){
 	}
 	rawoutput("</table>");
 }elseif($op=="graph"){
-	$sql = "SELECT count(acctid) AS c, substring(laston,1,10) AS d FROM " . db_prefix("accounts") . " GROUP BY d DESC ORDER BY d DESC";
+	$sql = "SELECT count(acctid) AS c, substring(laston,1,10) AS d FROM " . db_prefix("accounts") . " GROUP BY d ORDER BY d DESC";
 	$result = db_query($sql);
 	output("`n`%`bDate accounts last logged on:`b");
 	rawoutput("<table border='0' cellpadding='0' cellspacing='0'>");
