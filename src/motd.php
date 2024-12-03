@@ -71,7 +71,7 @@ if ($op=="") {
 	}
 	while ($row = db_fetch_assoc($result)) {
 		if (!isset($session['user']['lastmotd']))
-			$session['user']['lastmotd']=0;
+			$session['user']['lastmotd']=time();
 		if ($row['motdauthorname']=="")
 			$row['motdauthorname']="`@Green Dragon Staff`0";
 		if ($row['motdtype']==0){
@@ -113,7 +113,9 @@ $session['needtoviewmotd']=false;
 $sql = "SELECT motddate FROM " . db_prefix("motd") ." ORDER BY motditem DESC LIMIT 1";
 $result = db_query_cached($sql, "motddate");
 $row = db_fetch_assoc($result);
-$session['user']['lastmotd']=$row['motddate'];
+if ($row) {
+    $session['user']['lastmotd']=$row['motddate'];
+}
 
 popup_footer();
 ?>
