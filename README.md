@@ -3,6 +3,10 @@
 See [Dragonprime Reborn](https://dragonprime-reborn.ca) and [lotgd-archivist](https://github.com/lotgd-archivist?tab=repositories)
 for the sources used in this project and much, much more (tons of modules and other versions/forks).
 
+Other sources:
+- https://github.com/lotgd/lotgd modern rewrite
+- https://github.com/stephenKise/Legend-of-the-Green-Dragon longstanding project that has updated and fixed the codebase without a rewrite
+
 ## Codebase
 
 A fork of 1.1.2 Dragonprime made by the admin of lotgd.de, one of the few active community remaining (taken from [here](https://dragonprime-reborn.ca/viewtopic.php?p=1151&sid=16305d1c52fb49764e832a7460f9b1f7#p1151)).
@@ -34,6 +38,7 @@ for installation:
 
 ## Modules
 
-Added `lovers` and `riddles` from [here](https://dragonprime-reborn.ca/viewtopic.php?f=10&t=5&sid=16305d1c52fb49764e832a7460f9b1f7).
+Got a lot (all) of the modules from previous sources. What currently is in `src/modules` has been briefly reviewed and
+sort of tested. I've been mostly removing duplicates.
 
-The `todo` folder contains a ton of modules to try.
+The `todo` folder contains a lot of modules yet to try.
