@@ -87,10 +87,17 @@ function calculate_buff_fields(){
 						$val = $value;
 				}
 				if (!isset($output)) $output = "";
-				if ($output == "" && (string)$val != (string)$origstring){
-					$buffreplacements[$buffname][$property] = $origstring;
-					$session['bufflist'][$buffname][$property] = $val;
-				}//end if
+                if (is_array($val) || is_array($origstring)) {
+                    // TODO: got an error "array to string conversion" here, when interacting with Violet
+                    //  after marrying her
+                    //  array(2) { [0]=> string(18) "`!You miss %s`!.`0" [1]=> string(8) "`%Violet" } array(2) { [0]=> string(18) "`!You miss %s`!.`0" [1]=> string(8) "`%Violet" } string(0) ""
+                    // var_dump($val, $origstring, $output);
+                } else {
+                    if ($output == "" && (string)$val != (string)$origstring){
+                        $buffreplacements[$buffname][$property] = $origstring;
+                        $session['bufflist'][$buffname][$property] = $val;
+                    }//end if
+                }
 				unset($val);
 			}//end foreach
 			$session['bufflist'][$buffname]['fields_calculated']=true;
