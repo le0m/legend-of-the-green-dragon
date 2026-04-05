@@ -1,0 +1,43 @@
+volumes:
+  mysql-data:
+
+services:
+  web:
+    image: lotgd/web:dev
+    build:
+      context: ./
+      target: web
+    restart: unless-stopped
+    ports:
+      - '8080:80'
+    environment:
+      PHPFPM_HOST: 'app:9000'
+    depends_on:
+      - app
+
+  app:
+    image: lotgd/app:dev
+    build:
+      context: ./
+      target: app
+    restart: unless-stopped
+    environment:
+      DB_HOST: database
+      DB_USER: lotgd
+      DB_PASS: lotgd
+      DB_NAME: lotgd
+    depends_on:
+      - database
+
+  database:
+    image: mysql:8
+    restart: unless-stopped
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_USER: lotgd
+      MYSQL_PASSWORD: lotgd
+      MYSQL_DATABASE: lotgd

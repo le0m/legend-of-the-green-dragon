@@ -7,22 +7,32 @@ Other sources:
 - https://github.com/lotgd/lotgd modern rewrite
 - https://github.com/stephenKise/Legend-of-the-Green-Dragon longstanding project that has updated and fixed the codebase without a rewrite
 
-## Codebase
+## Changes
+
+**Codebase**
 
 A fork of 1.1.2 Dragonprime made by the admin of lotgd.de, one of the few active community remaining (taken from [here](https://dragonprime-reborn.ca/viewtopic.php?p=1151&sid=16305d1c52fb49764e832a7460f9b1f7#p1151)).
 
-It's mainly an upgrade to PHP 8.1 and MySQL 8, with a few QoL improvements like AJAX chat. Modules for 1.1.2 Dragonprime
+It's mainly an upgrade to PHP 8.2 and MySQL 8, with a few QoL improvements like AJAX chat. Modules for 1.1.2 Dragonprime
 are compatible.
 
-## Database
+**Database**
 
 The database is from version 1.1.2 Dragonprime, with fixes for:
 - `drinks` and `riddles` modules (taken from [here](https://dragonprime-reborn.ca/viewtopic.php?f=10&t=5&sid=16305d1c52fb49764e832a7460f9b1f7))
 - `module_hooks` table (implemented in the used codebase)
+- set multiple `accounts` columns to nullable
 
 ## Installation
 
-Have a database with authorized user.
+Docker:
+- copy `docker-compose.example.yml` to `docker-compose.yml`
+- run `docker compose up -d --build`
+- import `lotgd.sql` to the database to create the initial tables
+
+Manual:
+- import `lotgd.sql` to the database to create the initial tables
+- configure your web server, using `src/` as webroot
 
 Go to `https://<domain>/installer.php` and follow the instructions. **Do not activate modules**, just install them. Use
 this snippet to select all modules for installation:
