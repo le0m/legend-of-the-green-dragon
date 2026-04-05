@@ -160,7 +160,7 @@ if (file_exists("dbconnect.php")){
 // http://php.net/manual/en/features.persistent-connections.php
 //
 if (!defined("DB_NODB")) {
-	$link = db_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_PORT);
+	$link = db_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_PORT);
 	define("VALIDDB_NAME",$DB_NAME);
 }
 else $link=false;

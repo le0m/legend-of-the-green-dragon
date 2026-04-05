@@ -27,3 +27,4 @@ WORKDIR /app
 
 # Copy application
 COPY --chown=www-data:www-data ./src/ /app/
+COPY --chown=www-data:www-data ./src/dbconnect.example.php /app/dbconnect.php

@@ -149,7 +149,7 @@ function db_pconnect($host,$user,$pass,$port = null){
 	}
 }
 
-function db_connect($host,$user,$pass,$port = null){
+function db_connect($host,$user,$pass,$name = null,$port = null){
 	global $mysqli_resource;
 
     if ($port === null && !empty($DB_PORT)) {
@@ -157,7 +157,7 @@ function db_connect($host,$user,$pass,$port = null){
     }
 
 	// Constants cannot be an object
-	$mysqli_resource = New MySQLi($host, $user, $pass, null, $port);
+	$mysqli_resource = New MySQLi($host, $user, $pass, $name, $port);
 
 	if($mysqli_resource) {
 	  return true;
