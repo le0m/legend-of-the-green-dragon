@@ -511,7 +511,7 @@ CREATE TABLE `module_hooks` (
   `functionname` varchar(50) NOT NULL,
   `whenactive` text NOT NULL,
   `priority` int(11) NOT NULL DEFAULT '50',
-  PRIMARY KEY (`modulename`,`location`,`function`),
+  PRIMARY KEY (`modulename`,`location`,`functionname`),
   KEY `location` (`location`)
 );
 /*!40101 SET character_set_client = @saved_cs_client */;
