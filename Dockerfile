@@ -7,9 +7,9 @@ FROM chialab/php:${PHP_VERSION}-apache
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 COPY deploy/php-conf.ini /usr/local/etc/php/conf.d/lotgd.ini
-RUN rm /etc/apache2/conf-enabled/000-default.conf
 COPY deploy/apache.conf /etc/apache2/conf-enabled/lotgd.conf
 COPY deploy/virtualhost.conf /etc/apache2/sites-enabled/lotgd.conf
+RUN rm /etc/apache2/sites-enabled/000-default.conf
 
 # Setup user.
 RUN mkdir -p /app && chown www-data:www-data /app
