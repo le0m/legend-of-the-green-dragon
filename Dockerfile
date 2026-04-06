@@ -1,23 +1,14 @@
 ARG PHP_VERSION=8.2
 
 ###
-# Caddy image
+# App image
 ###
-FROM caddy:2-alpine AS web
+FROM chialab/php:${PHP_VERSION}-apache
 
-COPY ./deploy/Caddyfile /etc/caddy/
-COPY ./src/ /app/
-
-VOLUME /app/
-EXPOSE 80
-
-###
-# PHP app image
-###
-FROM chialab/php${PHP_IMAGE_VARIANT}:${PHP_VERSION}-fpm AS app
-
+RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 COPY deploy/php-conf.ini /usr/local/etc/php/conf.d/lotgd.ini
-COPY deploy/phpfpm-conf.ini /usr/local/etc/php-fpm.d/zzz-lotgd.conf
+COPY deploy/apache.conf /etc/apache2/conf-enabled/lotgd.conf
+COPY deploy/virtualhost.conf /etc/apache2/sites-enabled/lotgd.conf
 
 # Setup user.
 RUN mkdir -p /app && chown www-data:www-data /app
@@ -27,3 +18,5 @@ WORKDIR /app
 # Copy application
 COPY --chown=www-data:www-data ./src/ /app/
 COPY --chown=www-data:www-data ./src/dbconnect.example.php /app/dbconnect.php
+
+CMD apache2-foreground
