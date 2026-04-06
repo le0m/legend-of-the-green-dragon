@@ -1,5 +1,4 @@
 ARG PHP_VERSION=8.2
-ARG IMAGE_FLAVOR=-fpm-alpine
 
 ###
 # Caddy image
